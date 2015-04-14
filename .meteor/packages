@@ -8,3 +8,5 @@ meteor-platform
 autopublish
 insecure
 urigo:angular
+less
+nemo64:bootstrap
