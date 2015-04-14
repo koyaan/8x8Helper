@@ -5,9 +5,7 @@
 <body>
 
   {{> header}}
-
-  <div ng-app="mtrang" ng-include="'index.ng.html'"></div>
-
+  <div ng-app="eightbyeightHelper" ng-controller="eightbyeightController as ebeHelper" ng-mousedown="ebeHelper.mousedownHandler($event)" ng-mouseup="ebeHelper.mousedown=false" tabindex="0" ng-keypress="ebeHelper.keypressHandler($event)"  ng-init="ebeHelper.init()" ng-include="'index.ng.html'"></div>
 </body>
 
 <template name="hello">

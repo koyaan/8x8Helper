@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="starter-template">
+    <h1 ng-cloak contenteditable="true" ng-model="ebeHelper.pixelAnimation.name">{{ ebeHelper.pixelAnimation.name }}</h1>
+  </div>
+</div>
+
+<div class="frame-view starter-template">
+  <div class="frame" ng-class='$index == ebeHelper.pixelAnimation.activeFrame ? "active" : "" ' ng-repeat="frame in ebeHelper.pixelAnimation.frames" ng-click="ebeHelper.gotoFrame($index)">
+    <div class="pixel pixel-{{pixel.value}} mini-pixel" ng-repeat="pixel in frame.pixels">
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="starter-template">
+    <div class="row">
+      <div class="edit-frame">
+        <div class="pixels">
+          <div class="pixel pixel-{{pixel.value}}"
+               ng-repeat="pixel in ebeHelper.pixelAnimation.frames[ebeHelper.pixelAnimation.activeFrame].pixels"
+               ng-click="ebeHelper.clickPixel(pixel)"
+               ng-mousemove="ebeHelper.mousemovePixel($event,pixel)">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="controls">
+        Duration: <input type="text" class="form-control" ng-model="ebeHelper.getActiveFrame().duration" placeholder="Frame duration in ms" style="width: 5em; display: inline-block"> ms<br>
+        <a class='btn btn-lg btn-primary' ng-class='ebeHelper.pixelAnimation.activeFrame > 0 ? "" : "disabled"' ng-click="ebeHelper.firstFrame()" title="First frame"><span class="glyphicon glyphicon-fast-backward"></span></a>
+        <a class='btn btn-lg btn-primary' ng-class='ebeHelper.pixelAnimation.activeFrame > 0 ? "" : "disabled"' ng-click="ebeHelper.prevFrame()" title="Previous frame"><span class="glyphicon glyphicon-step-backward"></span></a>
+        <a class='btn btn-lg btn-default' ng-cloak title="Play"><span class="glyphicon" ng-class='!ebeHelper.pixelAnimation.playing ? "glyphicon-play" : "glyphicon-pause"' ng-click="ebeHelper.toggle()"></span> {{ ebeHelper.pixelAnimation.activeFrame+1 }}/{{ ebeHelper.pixelAnimation.frames.length }}</a>
+        <a class='btn btn-lg btn-primary' ng-click="ebeHelper.nextFrame()" title="Next frame. Doubleclick at last position adds new empty frame." ng-dblclick="ebeHelper.nextdoubleClick()"><span class="glyphicon glyphicon-step-forward"></span></a>
+        <a class='btn btn-lg btn-primary' ng-class='ebeHelper.pixelAnimation.activeFrame < ebeHelper.pixelAnimation.frames.length-1 ? "" : "disabled"' ng-click="ebeHelper.lastFrame()" title="Last frame"><span class="glyphicon glyphicon-fast-forward"></span></a>
+      </div>
+    </div>
+    <div class="frame-controls">
+      <a class="btn btn-primary" ng-click="ebeHelper.localSave()" title="Save in Local Storage"><span class="glyphicon glyphicon-save"></span></a>
+      <br>
+      <a class="btn btn-success" ng-click='ebeHelper.cloneFrame()' title="Add copy of Frame"><span class="glyphicon glyphicon-new-window"></span> Clone</a>
+      <a class="btn btn-success" ng-click="ebeHelper.addFrame()" title="Add empty Frame"> <span class="glyphicon glyphicon-edit"></span> Add new</a>
+      <br>
+      <a class='btn btn-danger' ng-class='ebeHelper.pixelAnimation.frames.length == 1 ? "disabled" : ""' ng-click="ebeHelper.removeFrame()" title="Remove Frame"><span class="glyphicon glyphicon-remove">Delete</span></a>
+      <a class='btn btn-warning' ng-click="ebeHelper.clearFrame()" title="Clear frame"><span class="glyphicon glyphicon-trash"></span> Empty</a>
+      <a class='btn btn-info' ng-click="ebeHelper.fillFrame()" title="Fill frame"><span class="glyphicon glyphicon-th"></span> Fill</a>
+      <br>
+      <a class='btn btn-default' ng-click="ebeHelper.drawvalue = !ebeHelper.drawvalue"> <span class="glyphicon glyphicon-pencil"></span> <div class="pixel pixel-{{ebeHelper.drawvalue}} midi-pixel"></div></a>
+      <a class='btn' ng-class='ebeHelper.pixelAnimation.loop ? "btn-info" : "btn-default"' ng-click="ebeHelper.pixelAnimation.loop = ! ebeHelper.pixelAnimation.loop" title="Toggle looping of animation"><span class="glyphicon glyphicon-repeat"></span></a>
+      <a class="btn btn-primary" ng-click="ebeHelper.export()" title="Export"><span class="glyphicon glyphicon-export"></span></a>
+    </div>
+
+  </div>
+</div>
