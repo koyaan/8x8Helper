@@ -3,9 +3,10 @@
 </head>
 
 <body>
-
+	<a href="https://angularjs.meteor.com/tutorial/step_03">continue</a>
+  <a href="https://github.com/strikeout/mylar">mylar</a>
   {{> header}}
-  <div ng-app="eightbyeightHelper" ng-controller="eightbyeightController as ebeHelper" ng-mousedown="ebeHelper.mousedownHandler($event)" ng-mouseup="ebeHelper.mousedown=false" tabindex="0" ng-keypress="ebeHelper.keypressHandler($event)"  ng-init="ebeHelper.init()" ng-include="'index.ng.html'"></div>
+  <div ng-app="eightbyeightHelper"  ng-controller="8x8Ctrl as ebeHelper" ng-mousedown="mousedownHandler($event)" ng-mouseup="mouseupHandler($event)" tabindex="0" ng-keypress="keypressHandler($event)"  ng-include="'index.ng.html'"></div>
 </body>
 
 <template name="hello">
