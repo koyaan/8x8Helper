@@ -1,12 +1,18 @@
 <head>
   <title>8x8mtr</title>
+  <base href="/">
 </head>
 
 <body>
 	<a href="https://angularjs.meteor.com/tutorial/step_03">continue</a>
   <a href="https://github.com/strikeout/mylar">mylar</a>
   {{> header}}
-  <div ng-app="eightbyeightHelper"  ng-controller="8x8Ctrl as ebeHelper" ng-mousedown="mousedownHandler($event)" ng-mouseup="mouseupHandler($event)" tabindex="0" ng-keypress="keypressHandler($event)"  ng-include="'index.ng.html'"></div>
+
+  <div ng-app="eightbyeightHelper">
+  <h1><a href="/animations">Animations index</a></h1>
+    <div ui-view></div>
+  </div>
+  <!--<div ng-app="eightbyeightHelper"  ng-controller="8x8Ctrl as ebeHelper" ng-mousedown="mousedownHandler($event)" ng-mouseup="mouseupHandler($event)" tabindex="0" ng-keypress="keypressHandler($event)"  ng-include="'index.ng.html'"></div>-->
 </body>
 
 <template name="hello">

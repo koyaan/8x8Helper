@@ -1,17 +1,57 @@
-angular.module('eightbyeightHelper',['angular-meteor','eightbyeightHelper.directives']);
+angular.module('eightbyeightHelper',['angular-meteor','eightbyeightHelper.directives','ui.router']);
+
+angular.module("eightbyeightHelper").config(['$urlRouterProvider', '$stateProvider', '$locationProvider',
+  function($urlRouterProvider, $stateProvider, $locationProvider){
+
+    $locationProvider.html5Mode(true);
+
+    $stateProvider
+      .state('animations', {
+        url: '/animations',
+        templateUrl: 'animations-list.ng.html',
+        controller: 'AnimationsListCtrl'
+      })
+      .state('animationDetails', {
+        url: '/animations/:animationId',
+        templateUrl: 'animation-details.ng.html',
+        controller: 'AnimationDetailsCtrl'
+      });
+
+    $urlRouterProvider.otherwise("/animations");
+  }]);
+
+angular.module("eightbyeightHelper").controller("AnimationsListCtrl", ['$scope', '$meteor',
+  function($scope, $meteor){
+
+    $scope.animations = $meteor.collection(Animations);
+
+    $scope.remove = function(animation){
+      $scope.animations.splice( $scope.animations.indexOf(animation), 1 );
+    };
+
+  }]);
+
+angular.module("eightbyeightHelper").controller("AnimationDetailsCtrl", ['$scope', '$stateParams',
+  function($scope, $stateParams){
+
+    $scope.animationId = $stateParams.animationId;
+
+  }]);
+
 
 angular.module("eightbyeightHelper").controller("8x8Ctrl",
   function($scope, $meteor, $log, $timeout){
     $scope.animations = $meteor.collection(Animations);
+    //$log.log(JSON.stringify($scope.animations));
+    //var firstId = $scope.animations[0]._id;
 
-    $log.log($scope.animations);
     window.scope = $scope;
-    $scope.dragThreshold = 1; // amount of pixels to consider dragging motion
+    $scope.dragThreshold = 7; // amount of pixels to consider dragging motion
     $scope.mousedown = false;
     $scope.drawvalue = 0;
     $scope.timeout = null;
 
-    $scope.currentAnimation = $meteor.object(Animations, "tBaBMsgLmi5KHYPod");
+    $scope.currentAnimation = $meteor.object(Animations, "t3jvyfvjk7AyESSoc", true);
     //$log.log($scope.currentAnimation);
 
     $scope.baseFrame = function () {

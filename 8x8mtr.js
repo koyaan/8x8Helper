@@ -23,8 +23,9 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
     console.log("Starting up!")
     console.log("Count", Animations.find({}).count());
-    Animations.remove({});
-    if (Animations.find({}).count() === 0) {
+    //Animations.remove({});
+    //if (Animations.find({}).count() === 0) {
+    if (Animations.find({}).count() !== 4) {
 
       var baseanimations = [
         {
@@ -49,6 +50,7 @@ if (Meteor.isServer) {
       ];
       console.log(baseanimations);
       for (var i = 0; i < baseanimations.length; i++) {
+      //for (var j = 0, i =0; j < 5; j++) {
       console.log("inserting " + i);
       console.log(baseanimations[i]);
         Animations.insert({
