@@ -1,0 +1,1 @@
+Animations = new Mongo.Collection("Animations");

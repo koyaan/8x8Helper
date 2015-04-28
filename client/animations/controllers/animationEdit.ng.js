@@ -1,57 +1,11 @@
-angular.module('eightbyeightHelper',['angular-meteor','eightbyeightHelper.directives','ui.router']);
-
-angular.module("eightbyeightHelper").config(['$urlRouterProvider', '$stateProvider', '$locationProvider',
-  function($urlRouterProvider, $stateProvider, $locationProvider){
-
-    $locationProvider.html5Mode(true);
-
-    $stateProvider
-      .state('animations', {
-        url: '/animations',
-        templateUrl: 'animations-list.ng.html',
-        controller: 'AnimationsListCtrl'
-      })
-      .state('animationDetails', {
-        url: '/animations/:animationId',
-        templateUrl: 'animation-details.ng.html',
-        controller: 'AnimationDetailsCtrl'
-      });
-
-    $urlRouterProvider.otherwise("/animations");
-  }]);
-
-angular.module("eightbyeightHelper").controller("AnimationsListCtrl", ['$scope', '$meteor',
-  function($scope, $meteor){
-
-    $scope.animations = $meteor.collection(Animations);
-
-    $scope.remove = function(animation){
-      $scope.animations.splice( $scope.animations.indexOf(animation), 1 );
-    };
-
-  }]);
-
-angular.module("eightbyeightHelper").controller("AnimationDetailsCtrl", ['$scope', '$stateParams', '$meteor',
-  function($scope, $stateParams, $meteor){
-
-    $scope.animationId = $stateParams.animationId;
-    $scope.animation = $meteor.object(Animations, $stateParams.animationId);
-  }]);
-
-angular.module("eightbyeightHelper").controller("8x8Ctrl",
-  function($scope, $meteor, $log, $timeout){
-    $scope.animations = $meteor.collection(Animations);
-    //$log.log(JSON.stringify($scope.animations));
-    //var firstId = $scope.animations[0]._id;
-
-    window.scope = $scope;
+angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
+  function($scope, $meteor, $log, $timeout, $stateParams){
     $scope.dragThreshold = 7; // amount of pixels to consider dragging motion
     $scope.mousedown = false;
-    $scope.drawvalue = 0;
+    $scope.drawvalue = 1;
     $scope.timeout = null;
 
-    $scope.currentAnimation = $meteor.object(Animations, "t3jvyfvjk7AyESSoc", true);
-    //$log.log($scope.currentAnimation);
+    $scope.animation = $meteor.object(Animations, $stateParams.animationId);
 
     $scope.baseFrame = function () {
       this.pixels = [];
@@ -63,22 +17,26 @@ angular.module("eightbyeightHelper").controller("8x8Ctrl",
     }
 
     $scope.getActiveFrame = function () {
-      var num  = $scope.currentAnimation.activeFrame;
-      return $scope.currentAnimation.frames[num];
+
+      if($scope.animation.frames) {
+        var num = $scope.animation.activeFrame;
+        return $scope.animation.frames[num];
+      }
+      return false;
     };
 
     $scope.export = function () {
 
       var animationExport = [];
 
-      $scope.currentAnimation.frames.forEach(function (frame, index) {
+      $scope.animation.frames.forEach(function (frame, index) {
         var frameExport = {index: index, pixels: ""};
         frame.pixels.forEach(function (pixel) {
           frameExport.pixels += pixel.value;
         });
         animationExport.push(frameExport);
       });
-      $log.log(JSON.stringify($scope.currentAnimation));
+      $log.log(JSON.stringify($scope.animation));
     };
 
     $scope.cloneFrame = function () {
@@ -89,12 +47,12 @@ angular.module("eightbyeightHelper").controller("8x8Ctrl",
         clonedFrame.pixels.push({value: $scope.getActiveFrame().pixels[i].value});
       }
 
-      $scope.currentAnimation.frames.splice($scope.currentAnimation.activeFrame, 0, clonedFrame);
-      $scope.currentAnimation.activeFrame++;
+      $scope.animation.frames.splice($scope.animation.activeFrame, 0, clonedFrame);
+      $scope.animation.activeFrame++;
     };
 
     $scope.toggle = function () {
-      if ($scope.currentAnimation.playing = !$scope.currentAnimation.playing) {
+      if ($scope.animation.playing = !$scope.animation.playing) {
         $scope.animate();
       } else {
         $timeout.cancel($scope.timeout);
@@ -104,8 +62,8 @@ angular.module("eightbyeightHelper").controller("8x8Ctrl",
     $scope.animate = function () {
       $scope.timeout =
           $timeout(function () {
-            if ($scope.currentAnimation.activeFrame < $scope.currentAnimation.frames.length - 1) {
-              $scope.currentAnimation.activeFrame++;
+            if ($scope.animation.activeFrame < $scope.animation.frames.length - 1) {
+              $scope.animation.activeFrame++;
               $scope.animate();
             } else {
               $scope.toggle();
@@ -120,25 +78,25 @@ angular.module("eightbyeightHelper").controller("8x8Ctrl",
         newFrame.pixels.push({value: 0});
       }
 
-      if ($scope.currentAnimation.activeFrame == -1) {
-        $scope.currentAnimation.frames.push(newFrame);
+      if ($scope.animation.activeFrame == -1) {
+        $scope.animation.frames.push(newFrame);
       } else {
-        $scope.currentAnimation.frames.splice($scope.currentAnimation.activeFrame + 1, 0, newFrame);
+        $scope.animation.frames.splice($scope.animation.activeFrame + 1, 0, newFrame);
       }
-      $scope.currentAnimation.activeFrame++;
+      $scope.animation.activeFrame++;
     };
 
     $scope.gotoFrame = function (index) {
-      $scope.currentAnimation.activeFrame = index;
+      $scope.animation.activeFrame = index;
     };
 
     $scope.prevFrame = function () {
-      $scope.gotoFrame($scope.currentAnimation.activeFrame > 0 ? $scope.currentAnimation.activeFrame - 1 : 0);
+      $scope.gotoFrame($scope.animation.activeFrame > 0 ? $scope.animation.activeFrame - 1 : 0);
     };
 
     $scope.nextFrame = function () {
-      if ($scope.currentAnimation.activeFrame < $scope.currentAnimation.frames.length - 1) {
-        $scope.gotoFrame($scope.currentAnimation.activeFrame + 1);
+      if ($scope.animation.activeFrame < $scope.animation.frames.length - 1) {
+        $scope.gotoFrame($scope.animation.activeFrame + 1);
       }
     };
 
@@ -147,39 +105,39 @@ angular.module("eightbyeightHelper").controller("8x8Ctrl",
     };
 
     $scope.lastFrame = function () {
-      $scope.gotoFrame($scope.currentAnimation.frames.length - 1)
+      $scope.gotoFrame($scope.animation.frames.length - 1)
     }
 
     $scope.fillFrame = function () {
       for (var i = 0; i < 64; i++) {
-        $scope.currentAnimation.frames[$scope.currentAnimation.activeFrame].pixels[i].value = 1;
+        $scope.animation.frames[$scope.animation.activeFrame].pixels[i].value = 1;
       }
       $scope.drawvalue = 1;
     };
 
     $scope.clearFrame = function () {
       for (var i = 0; i < 64; i++) {
-        $scope.currentAnimation.frames[$scope.currentAnimation.activeFrame].pixels[i].value = 0;
+        $scope.animation.frames[$scope.animation.activeFrame].pixels[i].value = 0;
       }
       $scope.drawvalue = 0;
     };
 
     $scope.removeFrame = function () {
 
-      if ($scope.currentAnimation.activeFrame == 0 && $scope.currentAnimation.frames.length == 1) {
+      if ($scope.animation.activeFrame == 0 && $scope.animation.frames.length == 1) {
         return;
       }
 
-      $scope.currentAnimation.frames.splice($scope.currentAnimation.activeFrame, 1);
+      $scope.animation.frames.splice($scope.animation.activeFrame, 1);
 
-      if ($scope.currentAnimation.activeFrame > 0) {
-        $scope.currentAnimation.activeFrame--;
+      if ($scope.animation.activeFrame > 0) {
+        $scope.animation.activeFrame--;
       }
 
     };
 
     $scope.keypressHandler = function (event) {
-      //$log.log(event.keyCode);
+      $log.log(event.keyCode);
       switch (event.keyCode) {
         case 13:    /* KP_ENTER */
           $scope.cloneFrame();
@@ -195,7 +153,7 @@ angular.module("eightbyeightHelper").controller("8x8Ctrl",
           $scope.removeFrame();
           break;
 //                case 48:    /* KP_0 */
-//                    $scope.currentAnimation.toggle();
+//                    $scope.animation.toggle();
 //                    break;
 //                case 49:   /* KP_1 */
 //                    $scope.firstFrame();
@@ -216,7 +174,6 @@ angular.module("eightbyeightHelper").controller("8x8Ctrl",
       if ($scope.mousedown) {
 
         if (Math.pow(Math.pow($scope.startPosition.x - event.pageX, 2) + Math.pow($scope.startPosition.y - event.pageY, 2), 0.5) > $scope.dragThreshold) {
-          console.log("wowow");
           pixel.value = $scope.drawvalue;
         }
       }
@@ -244,9 +201,14 @@ angular.module("eightbyeightHelper").controller("8x8Ctrl",
     };
 
     $scope.nextdoubleClick = function () {
-      if ($scope.currentAnimation.activeFrame == $scope.currentAnimation.frames.length - 1) {
+      if ($scope.animation.activeFrame == $scope.animation.frames.length - 1) {
         $scope.addFrame();
       }
+    };
+
+    $scope.keypressCallback = function($event) {
+      alert('Voila!');
+      $event.preventDefault();
     };
 
   });

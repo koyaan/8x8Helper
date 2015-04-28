@@ -10,10 +10,9 @@
 
   <div ng-app="eightbyeightHelper">
   <h1><a href="/animations">Animations index</a></h1>
-    <div ui-view></div>
+    <div ui-view  ng-keypress="keypressHandler($event)" tabindex="0"></div>
   </div>
-  <!--<div ng-app="eightbyeightHelper"  ng-controller="8x8Ctrl as ebeHelper" ng-mousedown="mousedownHandler($event)" ng-mouseup="mouseupHandler($event)" tabindex="0" ng-keypress="keypressHandler($event)"  ng-include="'index.ng.html'"></div>-->
-</body>
+  </body>
 
 <template name="hello">
   <button>Click Me</button>
