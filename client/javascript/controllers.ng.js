@@ -31,13 +31,12 @@ angular.module("eightbyeightHelper").controller("AnimationsListCtrl", ['$scope',
 
   }]);
 
-angular.module("eightbyeightHelper").controller("AnimationDetailsCtrl", ['$scope', '$stateParams',
-  function($scope, $stateParams){
+angular.module("eightbyeightHelper").controller("AnimationDetailsCtrl", ['$scope', '$stateParams', '$meteor',
+  function($scope, $stateParams, $meteor){
 
     $scope.animationId = $stateParams.animationId;
-
+    $scope.animation = $meteor.object(Animations, $stateParams.animationId);
   }]);
-
 
 angular.module("eightbyeightHelper").controller("8x8Ctrl",
   function($scope, $meteor, $log, $timeout){
