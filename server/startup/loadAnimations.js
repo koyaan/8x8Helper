@@ -3,29 +3,11 @@ Meteor.startup(function () {
   console.log("Count", Animations.find({}).count());
   //Animations.remove({});
   //if (Animations.find({}).count() === 0) {
-  if (Animations.find({}).count() !== 4) {
-
-    var baseanimations = [
-      {
-        frames: [{
-          duration: 500,
-          pixels: [
-            {value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},
-            {value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},
-            {value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},
-            {value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},
-            {value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},
-            {value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},
-            {value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},
-            {value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0},{value: 0}
-          ]
-        }],
-        playing: false,
-        activeFrame: 0,
-        loop: false,
-        name: "Unitled Base Animation"
-      }
-    ];
+  if (Animations.find({}).count() < 25) {
+    var baseanimations = [];
+    for (var i = 0; i < 3; i++) {
+      baseanimations.push(new random_animation());
+    }
     console.log(baseanimations);
     for (var i = 0; i < baseanimations.length; i++) {
       //for (var j = 0, i =0; j < 5; j++) {
