@@ -5,7 +5,7 @@
 </div>
 <h1>User: {{$root.currentUser._id}}</h1>
 <div class="frame-view starter-template">
-  <div class="frame" ng-class='$index == animation.activeFrame ? "active" : "" ' ng-repeat="frame in animation.frames" ng-click="gotoFrame($index)">
+  <div class="frame" ng-class='$index == activeFrame ? "active" : "" ' ng-repeat="frame in animation.frames" ng-click="gotoFrame($index)">
     <div class="pixel pixel-{{pixelClass(pixel.value)}} mini-pixel" ng-repeat="pixel in frame.pixels  track by $index">
     </div>
   </div>
@@ -17,7 +17,7 @@
       <div class="edit-frame" ng-mousedown="mousedownHandler($event)" ng-mouseup="mouseupHandler($event)">
         <div class="pixels">
           <div class="pixel pixel-{{pixelClass(pixel.value)}}"
-               ng-repeat="pixel in animation.frames[animation.activeFrame].pixels track by $index"
+               ng-repeat="pixel in animation.frames[activeFrame].pixels track by $index"
                ng-click="clickPixel(pixel)"
                ng-mousemove="mousemovePixel($event,pixel)">
           </div>
@@ -27,11 +27,11 @@
     <div class="row">
       <div class="controls">
         Duration: <input type="text" class="form-control" ng-model="getActiveFrame().duration" placeholder="Frame duration in ms" style="width: 5em; display: inline-block"> ms<br>
-        <a class='btn btn-lg btn-primary' ng-class='animation.activeFrame > 0 ? "" : "disabled"' ng-click="firstFrame()" title="First frame"><span class="glyphicon glyphicon-fast-backward"></span></a>
-        <a class='btn btn-lg btn-primary' ng-class='animation.activeFrame > 0 ? "" : "disabled"' ng-click="prevFrame()" title="Previous frame"><span class="glyphicon glyphicon-step-backward"></span></a>
-        <a class='btn btn-lg btn-default' ng-cloak title="Play"><span class="glyphicon" ng-class='!animationPlaying ? "glyphicon-play" : "glyphicon-pause"' ng-click="togglePlay()"></span> {{ animation.activeFrame+1 }}/{{ animation.frames.length }}</a>
+        <a class='btn btn-lg btn-primary' ng-class='activeFrame > 0 ? "" : "disabled"' ng-click="firstFrame()" title="First frame"><span class="glyphicon glyphicon-fast-backward"></span></a>
+        <a class='btn btn-lg btn-primary' ng-class='activeFrame > 0 ? "" : "disabled"' ng-click="prevFrame()" title="Previous frame"><span class="glyphicon glyphicon-step-backward"></span></a>
+        <a class='btn btn-lg btn-default' ng-cloak title="Play"><span class="glyphicon" ng-class='!animationPlaying ? "glyphicon-play" : "glyphicon-pause"' ng-click="togglePlay()"></span> {{ activeFrame+1 }}/{{ animation.frames.length }}</a>
         <a class='btn btn-lg btn-primary' ng-click="nextFrame()" title="Next frame. Doubleclick at last position adds new empty frame." ng-dblclick="nextdoubleClick()"><span class="glyphicon glyphicon-step-forward"></span></a>
-        <a class='btn btn-lg btn-primary' ng-class='animation.activeFrame < animation.frames.length-1 ? "" : "disabled"' ng-click="lastFrame()" title="Last frame"><span class="glyphicon glyphicon-fast-forward"></span></a>
+        <a class='btn btn-lg btn-primary' ng-class='activeFrame < animation.frames.length-1 ? "" : "disabled"' ng-click="lastFrame()" title="Last frame"><span class="glyphicon glyphicon-fast-forward"></span></a>
       </div>
     </div>
     <div class="frame-controls">

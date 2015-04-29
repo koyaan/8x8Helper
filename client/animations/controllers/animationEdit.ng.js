@@ -2,11 +2,14 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
   function($scope, $meteor, $log, $timeout, $stateParams){
     $scope.dragThreshold = 7; // amount of pixels to consider dragging motion
     $scope.mousedown = false;
+    $scope.draging = false;
     $scope.drawvalue = 1;
     $scope.timeout = null;
     $scope.animationPlaying = false;
+    $scope.activeFrame = 0;
+    $scope.saveTimeout = null;
 
-    $scope.animation = $meteor.object(Animations, $stateParams.animationId);
+    $scope.animation = $meteor.object(Animations, $stateParams.animationId, false);
 
     $scope.baseFrame = function () {
       this.pixels = [];
@@ -20,7 +23,7 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
     $scope.getActiveFrame = function () {
 
       if($scope.animation.frames) {
-        var num = $scope.animation.activeFrame;
+        var num = $scope.activeFrame;
         return $scope.animation.frames[num];
       }
       return false;
@@ -48,8 +51,9 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
         clonedFrame.pixels.push({value: $scope.getActiveFrame().pixels[i].value});
       }
 
-      $scope.animation.frames.splice($scope.animation.activeFrame, 0, clonedFrame);
-      $scope.animation.activeFrame++;
+      $scope.animation.frames.splice($scope.activeFrame, 0, clonedFrame);
+      $scope.activeFrame++;
+      $scope.animation.save();
     };
 
     $scope.togglePlay = function () {
@@ -63,8 +67,8 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
     $scope.animate = function () {
       $scope.timeout =
           $timeout(function () {
-            if ($scope.animation.activeFrame < $scope.animation.frames.length - 1) {
-              $scope.animation.activeFrame++;
+            if ($scope.activeFrame < $scope.animation.frames.length - 1) {
+              $scope.activeFrame++;
               $scope.animate();
             } else {
               $scope.toggle();
@@ -78,26 +82,23 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
       for (var i = 0; i < 64; i++) {
         newFrame.pixels.push({value: 0});
       }
+      $scope.animation.frames.splice($scope.activeFrame + 1, 0, newFrame);
 
-      if ($scope.animation.activeFrame == -1) {
-        $scope.animation.frames.push(newFrame);
-      } else {
-        $scope.animation.frames.splice($scope.animation.activeFrame + 1, 0, newFrame);
-      }
-      $scope.animation.activeFrame++;
+      $scope.activeFrame++;
+      $scope.animation.save();
     };
 
     $scope.gotoFrame = function (index) {
-      $scope.animation.activeFrame = index;
+      $scope.activeFrame = index;
     };
 
     $scope.prevFrame = function () {
-      $scope.gotoFrame($scope.animation.activeFrame > 0 ? $scope.animation.activeFrame - 1 : 0);
+      $scope.gotoFrame($scope.activeFrame > 0 ? $scope.activeFrame - 1 : 0);
     };
 
     $scope.nextFrame = function () {
-      if ($scope.animation.activeFrame < $scope.animation.frames.length - 1) {
-        $scope.gotoFrame($scope.animation.activeFrame + 1);
+      if ($scope.activeFrame < $scope.animation.frames.length - 1) {
+        $scope.gotoFrame($scope.activeFrame + 1);
       }
     };
 
@@ -111,30 +112,32 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
 
     $scope.fillFrame = function () {
       for (var i = 0; i < 64; i++) {
-        $scope.animation.frames[$scope.animation.activeFrame].pixels[i].value = 1;
+        $scope.animation.frames[$scope.activeFrame].pixels[i].value = 1;
       }
       $scope.drawvalue = 1;
+      $scope.animation.save();
     };
 
     $scope.clearFrame = function () {
       for (var i = 0; i < 64; i++) {
-        $scope.animation.frames[$scope.animation.activeFrame].pixels[i].value = 0;
+        $scope.animation.frames[$scope.activeFrame].pixels[i].value = 0;
       }
       $scope.drawvalue = 0;
+      $scope.animation.save();
     };
 
     $scope.removeFrame = function () {
 
-      if ($scope.animation.activeFrame == 0 && $scope.animation.frames.length == 1) {
+      if ($scope.activeFrame == 0 && $scope.animation.frames.length == 1) {
         return;
       }
 
-      $scope.animation.frames.splice($scope.animation.activeFrame, 1);
+      $scope.animation.frames.splice($scope.activeFrame, 1);
 
-      if ($scope.animation.activeFrame > 0) {
-        $scope.animation.activeFrame--;
+      if ($scope.activeFrame > 0) {
+        $scope.activeFrame--;
       }
-
+      $scope.animation.save();
     };
 
     $scope.keypressHandler = function (event) {
@@ -175,21 +178,24 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
       if ($scope.mousedown) {
 
         if (Math.pow(Math.pow($scope.startPosition.x - event.pageX, 2) + Math.pow($scope.startPosition.y - event.pageY, 2), 0.5) > $scope.dragThreshold) {
+          $scope.draging = true;
           pixel.value = $scope.drawvalue;
         }
       }
     };
 
     $scope.clickPixel = function (pixel) {
-
       pixel.value = pixel.value == 1 ? 0 : 1;
-
+      if($scope.saveTimeout)
+        $timeout.cancel($scope.saveTimeout); // requeue save
+      $scope.saveTimeout =
+        $timeout(function () {
+          $scope.animation.save();
+        }, 750);
     };
 
     $scope.toggleDrawvalue = function () {
-
       $scope.drawvalue = $scope.drawvalue == 1 ? 0 : 1;
-
     };
 
     $scope.mousedownHandler = function (event) {
@@ -199,17 +205,18 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
 
     $scope.mouseupHandler = function (event) {
       $scope.mousedown = false;
+      if($scope.draging)  {
+        if($scope.saveTimeout)
+          $timeout.cancel($scope.saveTimeout);
+        $scope.animation.save();
+      }
+      $scope.draging = false;
     };
 
     $scope.nextdoubleClick = function () {
-      if ($scope.animation.activeFrame == $scope.animation.frames.length - 1) {
+      if ($scope.activeFrame == $scope.animation.frames.length - 1) {
         $scope.addFrame();
       }
-    };
-
-    $scope.keypressCallback = function($event) {
-      alert('Voila!');
-      $event.preventDefault();
     };
 
   });
