@@ -27,6 +27,7 @@
     </div>
     <div class="row">
       <div class="controls">
+        Public: <input type="checkbox" ng-model="animation.public" ng-click="delayedSave();">
         Duration: <input type="text" class="form-control" ng-model="getActiveFrame().duration" placeholder="Frame duration in ms" style="width: 5em; display: inline-block"> ms<br>
         <a class='btn btn-lg btn-primary' ng-class='activeFrame > 0 ? "" : "disabled"' ng-click="firstFrame()" title="First frame"><span class="glyphicon glyphicon-fast-backward"></span></a>
         <a class='btn btn-lg btn-primary' ng-class='activeFrame > 0 ? "" : "disabled"' ng-click="prevFrame()" title="Previous frame"><span class="glyphicon glyphicon-step-backward"></span></a>

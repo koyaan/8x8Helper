@@ -1,6 +1,5 @@
 Animations = new Mongo.Collection("Animations");
 
-
 Animations.allow({
   insert: function (userId, animation) {
     return userId && animation.owner === userId;

@@ -9,6 +9,7 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
     $scope.activeFrame = 0;
     $scope.saveTimeout = null;
 
+    $scope.animations = $meteor.collection(Animations).subscribe("animations");
     $scope.animation = $meteor.object(Animations, $stateParams.animationId, false);
 
     $scope.baseFrame = function () {

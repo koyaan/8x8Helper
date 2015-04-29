@@ -1,12 +1,10 @@
 <meteor-include src="header"></meteor-include>
 <div class="container">
-  <div>
-      <h1>list of animations</h1>
-      <ul>
-        <li ng-repeat="animation in animations">
+  <div class="starter-template">
+      <h1>All public Animations</h1>
+        <div ng-repeat="animation in animations">
           <a href="/animations/edit/{{animation._id}}">{{animation.name}}</a>
           <button ng-click="remove(animation)">X</button>
-        </li>
-      </ul>
+    </div>
   </div>
 </div>

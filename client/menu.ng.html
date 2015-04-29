@@ -1,12 +1,11 @@
 <ul class="nav navbar-nav">
   <li ui-sref-active="active"><a ui-sref="animations">Index</a></li>
   <li ui-sref-active="active"><a ui-sref="about">About</a></li>
-  <li class="dropdown {{$state.includes('animationEdit')?'active':'asdf'}}">
+  <li class="dropdown {{$state.includes('animationEdit')?'active':''}}">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Animation {{animation.name}}<b class="caret"></b></a>
     <ul class="dropdown-menu">
       <li><a href="#">New</a></li> <!-- TODO: implement new anim -->
-      <li ng-hide="animation"><a href="#">Fork</a></li> <!-- TODO: implement fork anim  -->
-      <li><a href="#">Something else here</a></li>
+      <li ng-show="$state.includes('animationEdit')"><a href="#">Fork</a></li> <!-- TODO: implement fork anim  -->
       <li class="divider"></li>
       <li class="dropdown-header">Docs</li>
       <li><a href="https://angularjs.meteor.com/tutorial/step_03">angular-meteor</a></li>
