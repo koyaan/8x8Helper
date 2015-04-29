@@ -23,7 +23,7 @@ Animations.allow({
 random_animation = function () {
   this.frames = [];
   console.log(this.frames);
-  this.playing = false;
+  //this.playing = false;
   this.activeFrame = 0;
   this.loop = false;
   this.name = "RAND" + Math.random();

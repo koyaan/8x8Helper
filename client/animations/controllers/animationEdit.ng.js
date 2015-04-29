@@ -4,6 +4,7 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
     $scope.mousedown = false;
     $scope.drawvalue = 1;
     $scope.timeout = null;
+    $scope.animationPlaying = false;
 
     $scope.animation = $meteor.object(Animations, $stateParams.animationId);
 
@@ -51,8 +52,8 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
       $scope.animation.activeFrame++;
     };
 
-    $scope.toggle = function () {
-      if ($scope.animation.playing = !$scope.animation.playing) {
+    $scope.togglePlay = function () {
+      if ($scope.animationPlaying = !$scope.animationPlaying) {
         $scope.animate();
       } else {
         $timeout.cancel($scope.timeout);
