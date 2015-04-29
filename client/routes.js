@@ -4,6 +4,11 @@ angular.module("eightbyeightHelper").config(['$urlRouterProvider', '$stateProvid
     $locationProvider.html5Mode(true);
 
     $stateProvider
+      .state('about', {
+        url: '/about',
+        templateUrl: 'client/static/about.ng.html',
+        controller: 'AnimationsListCtrl'
+      })
       .state('animations', {
         url: '/animations',
         templateUrl: 'client/animations/views/animations-list.ng.html',

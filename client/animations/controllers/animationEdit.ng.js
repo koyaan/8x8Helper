@@ -16,6 +16,10 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
       this.duration = 500; // 0.5fps
     };
 
+    $scope.delayedSave = function() {
+      $timeout(function(){$scope.animation.save()}, 100); // need timeout to wait for directive propagation
+    }
+
     $scope.pixelClass = function(value) {
       return value == 0 ? "false" : "true";
     }
@@ -141,7 +145,7 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
     };
 
     $scope.keypressHandler = function (event) {
-      $log.log(event.keyCode);
+      //$log.log(event.keyCode);
       switch (event.keyCode) {
         case 13:    /* KP_ENTER */
           $scope.cloneFrame();

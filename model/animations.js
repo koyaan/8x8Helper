@@ -27,7 +27,7 @@ random_animation = function () {
   this.activeFrame = 0;
   this.loop = false;
   this.name = "RAND" + Math.random();
-  for (var j = 0; j < 23; j++) {
+  for (var j = 0; j < 7; j++) {
     this.frames.push(new empty_frame());
     for (var i = 0; i < 64; i++) {
       this.frames[j].pixels.push({value: Math.floor((Math.random() * 10)) % 2});

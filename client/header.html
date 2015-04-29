@@ -1,5 +1,4 @@
 <template name="header">
-<!-- Fixed navbar -->
 <div class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -11,23 +10,9 @@
       <a class="navbar-brand" href="#">8x8 Helper <span app-version></span></a>
     </div>
     <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#" ng-bind='ebeHelper.pixelAnimation.name'>Editor</a></li>
-        <li><a href="/animations">Index</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li class="dropdown-header">Docs</li>
-            <li><a href="https://angularjs.meteor.com/tutorial/step_03">angular-meteor</a></li>
-            <li><a href="https://github.com/strikeout/mylar">mylar</a></li>
-          </ul>
-        </li>
-      </ul>
+
+      <ng-include src="'client/menu.ng.html'"></ng-include>
+
       <ul class="nav navbar-nav navbar-right">
         {{> loginButtons }}
         <!--https://atmospherejs.com/ian/accounts-ui-bootstrap-3-->

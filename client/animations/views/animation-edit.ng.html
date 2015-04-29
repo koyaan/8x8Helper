@@ -1,9 +1,10 @@
+<meteor-include src="header"></meteor-include>
 <div class="container">
   <div class="starter-template">
-    <h1 ng-cloak contenteditable="true" ng-model="animation.name" >{{ animation.name }}</h1>
+    <h1 ng-cloak contenteditable="true" ng-model="animation.name" ng-blur="delayedSave()" tabindex="1">{{ animation.name }}</h1>
   </div>
 </div>
-<h1>User: {{$root.currentUser._id}}</h1>
+<!--<h1>User: {{$root.currentUser._id}}</h1>-->
 <div class="frame-view starter-template">
   <div class="frame" ng-class='$index == activeFrame ? "active" : "" ' ng-repeat="frame in animation.frames" ng-click="gotoFrame($index)">
     <div class="pixel pixel-{{pixelClass(pixel.value)}} mini-pixel" ng-repeat="pixel in frame.pixels  track by $index">

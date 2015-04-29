@@ -4,14 +4,9 @@
 </head>
 
 <body>
-  {{> header}}
-
   <div ng-app="eightbyeightHelper">
-    <div ui-view  ng-keypress="keypressHandler($event)" tabindex="0"></div>
+    <meteor-include src="header"></meteor-include>
+    <div ui-view  ng-keypress="keypressHandler($event)" tabindex="0">
+    </div>
   </div>
-  </body>
-
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
-</template>
+</body>
