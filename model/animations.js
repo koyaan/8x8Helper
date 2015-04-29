@@ -1,5 +1,25 @@
 Animations = new Mongo.Collection("Animations");
 
+
+Animations.allow({
+  insert: function (userId, animation) {
+    return userId && animation.owner === userId;
+  },
+  update: function (userId, animation, fields, modifier) {
+    if (userId !== animation.owner)
+      return false;
+
+    return true;
+  },
+  remove: function (userId, animation) {
+    if (userId !== animation.owner)
+      return false;
+
+    return true;
+  }
+});
+
+
 random_animation = function () {
   this.frames = [];
   console.log(this.frames);

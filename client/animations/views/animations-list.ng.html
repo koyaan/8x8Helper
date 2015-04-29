@@ -1,13 +1,11 @@
 <div class="container">
-  <div class="row">
-    <div>
-      <h2>list of animations</h2>
+  <div>
+      <h1>list of animations</h1>
       <ul>
         <li ng-repeat="animation in animations">
           <a href="/animations/edit/{{animation._id}}">{{animation.name}}</a>
           <button ng-click="remove(animation)">X</button>
         </li>
       </ul>
-    </div>
   </div>
 </div>

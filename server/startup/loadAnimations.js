@@ -1,7 +1,7 @@
 Meteor.startup(function () {
   console.log("Starting up!")
   console.log("Count", Animations.find({}).count());
-  //Animations.remove({});
+  Animations.remove({});
   //if (Animations.find({}).count() === 0) {
   if (Animations.find({}).count() < 25) {
     var baseanimations = [];
@@ -18,7 +18,9 @@ Meteor.startup(function () {
         playing: baseanimations[i].playing,
         activeFrame: baseanimations[i].activeFrame,
         loop: baseanimations[i].loop,
-        name: baseanimations[i].name
+        name: baseanimations[i].name,
+        owner: "xkzQLk2vJW66uAREj",
+        public: true
       });
     }
   }
