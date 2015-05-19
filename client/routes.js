@@ -25,7 +25,14 @@ angular.module("eightbyeightHelper").config(['$urlRouterProvider', '$stateProvid
         templateUrl: 'client/animations/views/animation-edit.ng.html',
         controller: 'AnimationEditCtrl',
         resolve: {'subscribe': function($meteor){$meteor.subscribe('animations')}}
-      });
+      })
+      .state('newAnimation', {
+        url: '/animations/new',
+        templateUrl: 'client/animations/views/animations-new.ng.html',
+        controller: 'AnimationsNewCtrl',
+        resolve: {'subscribe': function($meteor){$meteor.subscribe('animations')}}
+      })
+    ;
 
     $urlRouterProvider.otherwise("/animations");
   }]);
