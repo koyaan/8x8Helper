@@ -45,7 +45,7 @@
       <a class='btn btn-info' ng-click="fillFrame()" title="Fill frame"><span class="glyphicon glyphicon-th"></span> Fill</a>
       <br>
       <a class='btn btn-default' ng-click="toggleDrawvalue()"> <span class="glyphicon glyphicon-pencil"></span> <div class="pixel pixel-{{pixelClass(drawvalue)}} midi-pixel"></div></a>
-      <a class='btn' ng-class='animation.loop ? "btn-info" : "btn-default"' ng-click="animation.loop = ! animation.loop" title="Toggle looping of animation"><span class="glyphicon glyphicon-repeat"></span></a>
+      <a class='btn' ng-class='animationLoop ? "btn-info" : "btn-default"' ng-click="toggleLoop()" title="Toggle looping of animation"><span class="glyphicon glyphicon-repeat"></span></a>
       <a class="btn btn-primary" ng-click="export()" title="Export"><span class="glyphicon glyphicon-export"></span></a>
     </div>
 

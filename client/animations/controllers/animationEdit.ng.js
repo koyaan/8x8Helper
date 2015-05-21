@@ -6,6 +6,7 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
     $scope.drawvalue = 1;
     $scope.timeout = null;
     $scope.animationPlaying = false;
+    $scope.animationLoop = false;
     $scope.activeFrame = 0;
     $scope.saveTimeout = null;
 
@@ -69,6 +70,10 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
       }
     };
 
+    $scope.toggleLoop = function () {
+      $scope.animationLoop = !$scope.animationLoop;
+    };
+
     $scope.animate = function () {
       $scope.timeout =
           $timeout(function () {
@@ -76,7 +81,12 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
               $scope.activeFrame++;
               $scope.animate();
             } else {
-              $scope.toggle();
+              $scope.activeFrame = 0;
+              if(!$scope.animationLoop) {
+                $scope.togglePlay();
+              } else {
+                $scope.animate();
+              }
             }
           }, $scope.getActiveFrame().duration);
     };
