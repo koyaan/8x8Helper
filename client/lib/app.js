@@ -1,4 +1,4 @@
-angular.module('eightbyeightHelper',['angular-meteor','eightbyeightHelper.directives','ui.router']).run(
+angular.module('eightbyeightHelper',['angular-meteor','eightbyeightHelper.directives','ui.router','ui.bootstrap']).run(
   [          '$rootScope', '$state', '$stateParams',
     function ($rootScope,   $state,   $stateParams) {
 

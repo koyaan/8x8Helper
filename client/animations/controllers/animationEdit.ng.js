@@ -1,5 +1,15 @@
+/**
+ - TODO: import
+ - TODO: anonymous usage
+ - TODO: fork animations
+ - TODO: mobile optimization
+ - TODO: touch support
+
+ - TODO: pagination
+ */
+
 angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
-  function($scope, $meteor, $log, $timeout, $stateParams){
+  function($scope, $meteor, $log, $timeout, $stateParams, $modal){
     $scope.dragThreshold = 7; // amount of pixels to consider dragging motion
     $scope.mousedown = false;
     $scope.draging = false;
@@ -37,16 +47,44 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
 
     $scope.export = function () {
 
-      var animationExport = [];
+      $scope.animationExport = new function () {
+        this.name = $scope.animation.name;
+        this.frames = [];
+      };
 
       $scope.animation.frames.forEach(function (frame, index) {
-        var frameExport = {index: index, pixels: ""};
+        var frameExport = {index: index, one_bit_string: "", one_bit: [], eight_bit: []};
+        var bitPos = 7;     //  used to calculate row value
+        var pixelSum = 0;   //
         frame.pixels.forEach(function (pixel) {
-          frameExport.pixels += pixel.value;
+          frameExport.one_bit_string += pixel.value;
+          frameExport.one_bit.push(pixel.value);
+          pixelSum += pixel.value << bitPos--;
+          if(bitPos == -1)  {
+            frameExport.eight_bit.push(pixelSum); // we read 1 byte push it
+            bitPos = 7;
+            pixelSum = 0;
+          }
         });
-        animationExport.push(frameExport);
+        $scope.animationExport.frames.push(frameExport);
       });
-      $log.log(JSON.stringify($scope.animation));
+
+      var modalInstance = $modal.open({
+        animation: true,
+        templateUrl: 'client/animations/views/modal-content-export.ng.html',
+        controller: 'exportModalInstanceCtrl',
+        resolve: {
+          animationExport: function () {
+            return $scope.animationExport;
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+        //$scope.selected = selectedItem;
+      }, function () {
+        $log.info('Modal dismissed at: ' + new Date());
+      });
     };
 
     $scope.cloneFrame = function () {
