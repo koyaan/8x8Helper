@@ -1,9 +1,9 @@
 Meteor.startup(function () {
   console.log("Starting up!")
   console.log("Count", Animations.find({}).count());
-  Animations.remove({});
-  //if (Animations.find({}).count() === 0) {
-  if (Animations.find({}).count() < 25) {
+  //Animations.remove({});
+  if (Animations.find({}).count() === 0) {
+  //if (Animations.find({}).count() < 25) {
     var baseanimations = [];
     for (var i = 0; i < 3; i++) {
       baseanimations.push(new random_animation());
