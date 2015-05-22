@@ -1,10 +1,19 @@
 <meteor-include src="header"></meteor-include>
+
 <div class="container">
-  <div class="starter-template">
+  <div class="jumbotron">
+    <h1>8x8 Helper</h1>
+    <p>Generate your own 8x8 Animations with ease!</p>
+    <div style="text-align:center;">
+      <a href="https://github.com/koyaan/8x8helper" class="btn btn-lg btn-default" style="margin-right: 10px;">Github Page</a>
+      <a href="/sandbox" class="btn btn-lg btn-primary" id="preview-link">Try It</a>
+    </div>
+  </div>
+  <div class="row">
       <h1>All public Animations</h1>
         <div ng-repeat="animation in animations">
           <a href="/animations/edit/{{animation._id}}">{{animation.name}}</a>
           <button ng-click="remove(animation)">X</button>
-    </div>
+        </div>
   </div>
 </div>
