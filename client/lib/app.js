@@ -12,6 +12,9 @@ angular.module('eightbyeightHelper',['angular-meteor','eightbyeightHelper.direct
   ]
 )
 
+Accounts.ui.config({
+  passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL'
+});
 
 // counter starts at 0
 //Session.setDefault('counter', 0);
