@@ -20,8 +20,29 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
     $scope.activeFrame = 0;
     $scope.saveTimeout = null;
 
-    $scope.animations = $meteor.collection(Animations).subscribe("animations");
-    $scope.animation = $meteor.object(Animations, $stateParams.animationId, false);
+    var canvas = document.getElementById('myCanvas');
+    var ctx = canvas.getContext('2d');
+
+    $scope.animations = $meteor.subscribe("animations").then(function () {
+      $scope.animation = $meteor.object(Animations, $stateParams.animationId);
+      $scope.animation.name ="blblblb";
+      $scope.$watch(function(scope) { return scope.getActiveFrame() },
+        function() { $scope.drawFrame();}
+      );
+    });
+
+    $scope.drawFrame = function () {
+      $scope.animation.frames[$scope.activeFrame].pixels.forEach(function(pixel, index){
+        var pX = 10 +  index % 8 * (40 + 10);
+        var pY = 10 + Math.floor(index / 8) * (40 + 10);
+        if(pixel.value) {
+          ctx.fillStyle = "#d43f3a";
+        } else {
+          ctx.fillStyle = "#b9def0";
+        }
+        ctx.fillRect(pX,pY,40,40);
+      });
+    };
 
     $scope.baseFrame = function () {
       this.pixels = [];
@@ -29,20 +50,45 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
     };
 
     $scope.delayedSave = function() {
-      $timeout(function(){$scope.animation.save()}, 100); // need timeout to wait for directive propagation
-    }
+      console.log("delaying save");
+      $timeout(function(){
+        console.log($scope.animation);
+        $scope.animation.save()}, 600); // need timeout to wait for directive propagation
+    };
 
     $scope.pixelClass = function(value) {
       return value == 0 ? "false" : "true";
-    }
+    };
 
     $scope.getActiveFrame = function () {
-
-      if($scope.animation.frames) {
+      if($scope.animation) {
         var num = $scope.activeFrame;
         return $scope.animation.frames[num];
       }
       return false;
+    };
+
+    $scope.importString = "";
+
+    $scope.import = function () {
+      var importModalInstance = $modal.open({
+      importString: $scope.importString,
+      templateUrl: 'client/animations/views/modal-content-import.ng.html',
+      controller: 'importModalInstanceCtrl',
+      resolve: {
+        importString: function () {
+          return $scope.importString;
+        }
+      }
+    });
+
+    importModalInstance.result.then(function (importString) {
+      $scope.importString = importString;
+      $log.log($scope.importString)
+    }, function () {
+      $log.info('Import Modal dismissed at: ' + new Date());
+    });
+
     };
 
     $scope.export = function () {
@@ -161,7 +207,7 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
 
     $scope.lastFrame = function () {
       $scope.gotoFrame($scope.animation.frames.length - 1)
-    }
+    };
 
     $scope.fillFrame = function () {
       for (var i = 0; i < 64; i++) {
@@ -227,6 +273,27 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
       }
     };
 
+    $scope.togglePixel = function (lastX, lastY) {
+      if(lastX < 10 || lastX > 400 || lastY < 10 || lastY > 400)
+        return;
+      var pX = Math.floor(lastX / 50);
+      var pY = Math.floor(lastY / 50);
+      if(lastX % 50 > 10 && lastY % 50 > 10) {
+        $scope.getActiveFrame().pixels[pY*8+pX].value =
+        $scope.getActiveFrame().pixels[pY*8+pX].value == 1 ? 0 : 1;
+      }
+    };
+
+    $scope.drawPixel = function (lastX, lastY) {
+      if(lastX < 10 || lastX > 400 || lastY < 10 || lastY > 400)
+        return;
+      var pX = Math.floor(lastX / 50);
+      var pY = Math.floor(lastY / 50);
+      if(lastX % 50 > 10 && lastY % 50 > 10) {
+        $scope.getActiveFrame().pixels[pY * 8 + pX].value = $scope.drawvalue;
+      }
+    };
+
     $scope.mousemovePixel = function (event, pixel) {
       if ($scope.mousedown) {
 
@@ -239,12 +306,12 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
 
     $scope.clickPixel = function (pixel) {
       pixel.value = pixel.value == 1 ? 0 : 1;
-      if($scope.saveTimeout)
-        $timeout.cancel($scope.saveTimeout); // requeue save
-      $scope.saveTimeout =
-        $timeout(function () {
-          $scope.animation.save();
-        }, 750);
+      //if($scope.saveTimeout)
+      //  $timeout.cancel($scope.saveTimeout); // requeue save
+      //$scope.saveTimeout =
+      //  $timeout(function () {
+      //    $scope.animation.save();
+      //  }, 750);
     };
 
     $scope.toggleDrawvalue = function () {

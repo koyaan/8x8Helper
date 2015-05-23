@@ -1,4 +1,4 @@
-angular.module('eightbyeightHelper.directives', []).
+angular.module('eightbyeightHelper').
   directive('contenteditable', function () {
     return {
       require: 'ngModel',

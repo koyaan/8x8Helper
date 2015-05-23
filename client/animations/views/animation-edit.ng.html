@@ -1,10 +1,13 @@
 <meteor-include src="header"></meteor-include>
 <div class="container">
   <div class="starter-template">
-    <h1 ng-cloak contenteditable="true" ng-model="animation.name" ng-blur="delayedSave()" tabindex="1">{{ animation.name }}</h1>
+    <h1 contenteditable ng-model="animation.name"
+         strip-br="true"
+         required>{{animation.name}}</h1>
   </div>
 </div>
 <!--<h1>User: {{$root.currentUser._id}}</h1>-->
+
 <div class="frame-view starter-template">
   <div class="frame" ng-class='$index == activeFrame ? "active" : "" ' ng-repeat="frame in animation.frames" ng-click="gotoFrame($index)">
     <div class="pixel pixel-{{pixelClass(pixel.value)}} mini-pixel" ng-repeat="pixel in frame.pixels  track by $index">
@@ -14,17 +17,21 @@
 
 <div class="container">
   <div class="starter-template">
-    <div class="row">
-      <div class="edit-frame" ng-mousedown="mousedownHandler($event)" ng-mouseup="mouseupHandler($event)">
-        <div class="pixels">
-          <div class="pixel pixel-{{pixelClass(pixel.value)}}"
-               ng-repeat="pixel in animation.frames[activeFrame].pixels track by $index"
-               ng-click="clickPixel(pixel)"
-               ng-mousemove="mousemovePixel($event,pixel)">
-          </div>
-        </div>
-      </div>
-    </div>
+
+    <!--<div class="row">-->
+      <!--<div class="edit-frame" ng-mousedown="mousedownHandler($event)" ng-mouseup="mouseupHandler($event)">-->
+        <!--<div class="pixels">-->
+          <!--<div class="pixel pixel-{{pixelClass(pixel.value)}}"-->
+               <!--ng-repeat="pixel in animation.frames[activeFrame].pixels track by $index"-->
+               <!--ng-click="clickPixel(pixel)"-->
+               <!--ng-mousemove="mousemovePixel($event,pixel)">-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <canvas id="myCanvas" width="410" height="410"
+            style="border:1px solid #000000;" ebegrid>
+    </canvas>
     <div class="row">
       <div class="controls">
         Public: <input type="checkbox" ng-model="animation.public" ng-click="delayedSave();">
@@ -47,6 +54,7 @@
       <a class='btn btn-default' ng-click="toggleDrawvalue()"> <span class="glyphicon glyphicon-pencil"></span> <div class="pixel pixel-{{pixelClass(drawvalue)}} midi-pixel"></div></a>
       <a class='btn' ng-class='animationLoop ? "btn-info" : "btn-default"' ng-click="toggleLoop()" title="Toggle looping of animation"><span class="glyphicon glyphicon-repeat"></span></a>
       <a class="btn btn-primary" ng-click="export()" title="Export"><span class="glyphicon glyphicon-export"></span></a>
+      <a class="btn btn-primary" ng-click="import()" title="Import"><span class="glyphicon glyphicon-import"></span></a>
     </div>
 
   </div>
