@@ -19,17 +19,28 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
     $scope.animationLoop = false;
     $scope.activeFrame = 0;
     $scope.saveTimeout = null;
+    $scope.display = "none";
 
     var canvas = document.getElementById('myCanvas');
     var ctx = canvas.getContext('2d');
 
     $scope.animations = $meteor.subscribe("animations").then(function () {
+      $('.mycloak').removeClass("mycloak");
       $scope.animation = $meteor.object(Animations, $stateParams.animationId);
-      $scope.animation.name ="blblblb";
       $scope.$watch(function(scope) { return scope.getActiveFrame() },
-        function() { $scope.drawFrame();}
+        function() {
+          $scope.drawFrame();
+        }
       );
     });
+
+    $scope.getActiveFrame = function () {
+      if($scope.animation && $scope.animation.frames) {
+        var num = $scope.activeFrame;
+        return $scope.animation.frames[num];
+      }
+      return false;
+    };
 
     $scope.drawFrame = function () {
       $scope.animation.frames[$scope.activeFrame].pixels.forEach(function(pixel, index){
@@ -49,23 +60,9 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
       this.duration = 500; // 0.5fps
     };
 
-    $scope.delayedSave = function() {
-      console.log("delaying save");
-      $timeout(function(){
-        console.log($scope.animation);
-        $scope.animation.save()}, 600); // need timeout to wait for directive propagation
-    };
 
     $scope.pixelClass = function(value) {
       return value == 0 ? "false" : "true";
-    };
-
-    $scope.getActiveFrame = function () {
-      if($scope.animation) {
-        var num = $scope.activeFrame;
-        return $scope.animation.frames[num];
-      }
-      return false;
     };
 
     $scope.importString = "";
@@ -294,43 +291,8 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
       }
     };
 
-    $scope.mousemovePixel = function (event, pixel) {
-      if ($scope.mousedown) {
-
-        if (Math.pow(Math.pow($scope.startPosition.x - event.pageX, 2) + Math.pow($scope.startPosition.y - event.pageY, 2), 0.5) > $scope.dragThreshold) {
-          $scope.draging = true;
-          pixel.value = $scope.drawvalue;
-        }
-      }
-    };
-
-    $scope.clickPixel = function (pixel) {
-      pixel.value = pixel.value == 1 ? 0 : 1;
-      //if($scope.saveTimeout)
-      //  $timeout.cancel($scope.saveTimeout); // requeue save
-      //$scope.saveTimeout =
-      //  $timeout(function () {
-      //    $scope.animation.save();
-      //  }, 750);
-    };
-
     $scope.toggleDrawvalue = function () {
       $scope.drawvalue = $scope.drawvalue == 1 ? 0 : 1;
-    };
-
-    $scope.mousedownHandler = function (event) {
-      $scope.mousedown = true;
-      $scope.startPosition = {x: event.pageX, y: event.pageY};
-    };
-
-    $scope.mouseupHandler = function (event) {
-      $scope.mousedown = false;
-      if($scope.draging)  {
-        if($scope.saveTimeout)
-          $timeout.cancel($scope.saveTimeout);
-        $scope.animation.save();
-      }
-      $scope.draging = false;
     };
 
     $scope.nextdoubleClick = function () {

@@ -3,7 +3,6 @@ angular.module('eightbyeightHelper').
     return {
       restrict: "A",
       link: function(scope, element){
-        var ctx = element[0].getContext('2d');
 
         // variable that decides if something should be drawn on mousemove
         var drawing = false;
@@ -24,8 +23,6 @@ angular.module('eightbyeightHelper').
           // begins new line
           scope.startPosition = {x: lastX, y: lastY};
 
-          ctx.beginPath();
-
           drawing = true;
         });
 
@@ -39,8 +36,6 @@ angular.module('eightbyeightHelper').
               currentX = event.layerX - event.currentTarget.offsetLeft;
               currentY = event.layerY - event.currentTarget.offsetTop;
             }
-
-            draw(lastX, lastY, currentX, currentY);
 
             if (
               Math.pow(Math.pow(scope.startPosition.x - currentX, 2) +
@@ -82,17 +77,6 @@ angular.module('eightbyeightHelper').
         // canvas reset
         function reset(){
           element[0].width = element[0].width;
-        }
-
-        function draw(lX, lY, cX, cY){
-          // line from
-          ctx.moveTo(lX,lY);
-          // to
-          ctx.lineTo(cX,cY);
-          // color
-          ctx.strokeStyle = "#4bf";
-          // draw it
-          ctx.stroke();
         }
       }
     };
