@@ -29,6 +29,11 @@ angular.module('eightbyeightHelper').
         }
       }
     };
-  });
+  })
+.filter('floor', function() {
+  return function(input) {
+    return Math.floor(input);
+  };
+});
 
 //directive('contenteditable', ['$sce', function($sce) {

@@ -1,8 +1,8 @@
-@pixelSize: 3em;
-@miniPixelSize: @pixelSize/8;
+@pixelSize: 40px;
+@miniPixelSize: 6px;
 
 body {
-  padding-top: 5em;
+  padding-top: 50px;
 }
 
 .container {
@@ -41,41 +41,13 @@ body {
   text-align: left;
 }
 
-.pixel  {
-  width: @pixelSize;
-  height: @pixelSize;
-  padding: @pixelSize/8;
-  margin: @pixelSize/8;
-  display: inline-block;
-  cursor: pointer;
-
-  &.pixel-false {
-    background: #b9def0;
-  }
-  &.pixel-true {
-    background: #d43f3a;
-  }
-  &.mini-pixel {
-    width: @miniPixelSize;
-    height: @miniPixelSize;
-    margin: 0.1em;
-    padding:0;
-  }
-  &.midi-pixel {
-    width: 1.2em;
-    height: 1.2em;
-    margin: 0.1em;
-    padding:0;
-  }
-}
 
 .frame {
-  width: @miniPixelSize*14;
   line-height: 0;
   display: inline-block;
   border: 1px solid #ffffff;
   cursor: pointer;
-  padding: 0.3em 0.2em 0.3em 0.2em;
+  padding: 3px;
   &.active {
     border: 1px solid #b6b6b6;
   }
@@ -85,9 +57,6 @@ body {
   font-size: 50%;
 }
 
-[ng-cloak]  {
-  display: none!important;
-}
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }

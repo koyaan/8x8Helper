@@ -26,7 +26,7 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
 
     $scope.animations = $meteor.subscribe("animations").then(function () {
       $('.mycloak').removeClass("mycloak");
-      $scope.animation = $meteor.object(Animations, $stateParams.animationId);
+      $scope.animation = $meteor.object(Animations, $stateParams.animationId, false);
       $scope.$watch(function(scope) { return scope.getActiveFrame() },
         function() {
           $scope.drawFrame();
