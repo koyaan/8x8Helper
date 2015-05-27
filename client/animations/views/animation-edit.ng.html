@@ -1,12 +1,15 @@
 <meteor-include src="header"></meteor-include>
 <div class="container">
-  <div class="starter-template">
-    <h1 contenteditable ng-model="animation.name" class="mycloak" ng-change="animation.save()">{{animation.name}}</h1><!--ng-cloak didnt work here-->
+  <div class="centered-row">
+    <h1 contenteditable ng-model="animation.name" class="mycloak animation-title" ng-change="animation.save()" required></h1>
+    <a ng-click="togglePublic()" title="Toggle Public Flag">
+      <span class="glyphicon public-icon" ng-class="animation.public ? 'glyphicon-eye-open' : 'glyphicon-eye-close'"></span>
+    </a>
   </div>
 </div>
 <!--<h1>User: {{$root.currentUser._id}}</h1>-->
 
-<div class="frame-view starter-template">
+<div class="frame-view centered-row">
   <div class="frame" ng-class='$index == activeFrame ? "active" : "" ' ng-repeat="frame in animation.frames" ng-click="gotoFrame($index)">
     <canvas ng-model="frame" ebeframe width="83" height="83">
     </canvas>
@@ -14,33 +17,35 @@
 </div>
 
 <div class="container">
-  <div class="starter-template">
-    <canvas id="myCanvas" width="410" height="410" ebegrid>
-    </canvas>
-    <div class="row">
+  <div class="row">
+    <div class="col-xs-0  col-sm-2 col-md-3"></div>
+    <div class="col-xs-12 col-sm-8 col-md-6" style="text-align: center;">
+      <canvas id="myCanvas" width="410" height="410" ebegrid></canvas>
+    </div>
+    <div class="col-xs-12 col-sm-2 col-md-3"></div>
+  </div>
+  <div class="row">
+    <div class="frame-controls">
+      <a class='btn btn-lg btn-primary' ng-click="toggleDrawvalue()" ng-attr-style="color: {{ drawvalue ? '#d43f3a' : '#b9def0'}}" title="Toggle Draw Value (SPACE)"> <span class="glyphicon glyphicon-pencil"></span></a>
+      <a class="btn btn-primary" ng-click='cloneFrame()' title="Add copy of Frame"><span class="glyphicon glyphicon-new-window"></span></a>
+      <a class="btn btn-primary" ng-click="addFrame()" title="Add empty Frame"> <span class="glyphicon glyphicon-plus"></span></a>
+      <a class='btn btn-primary' ng-class='animation.frames.length == 1 ? "disabled" : ""' ng-click="removeFrame()" title="Remove Frame"><span class="glyphicon glyphicon-remove"></span></a>
+      <a class='btn btn-primary' ng-click="clearFrame()" title="Clear frame"><span class="glyphicon glyphicon-trash"></span></a>
+      <a class='btn btn-primary' ng-click="fillFrame()" title="Fill frame"><span class="glyphicon glyphicon-th"></span></a>
+      <a class="btn btn-primary" ng-click="export()" title="Export"><span class="glyphicon glyphicon-export"></span></a>
+      <a class="btn btn-primary" ng-click="import()" title="Import"><span class="glyphicon glyphicon-import"></span></a>
+      <input type="text" class="form-control" ng-model="getActiveFrame().duration" placeholder="Frame duration in ms" style="width: 5em; display: inline-block"> ms
+    </div>
+  </div>
+  <div class="row">
       <div class="controls">
-        Public: <input type="checkbox" ng-model="animation.public" ng-click="delayedSave();">
-        Duration: <input type="text" class="form-control" ng-model="getActiveFrame().duration" placeholder="Frame duration in ms" style="width: 5em; display: inline-block"> ms<br>
         <a class='btn btn-lg btn-primary' ng-class='activeFrame > 0 ? "" : "disabled"' ng-click="firstFrame()" title="First frame"><span class="glyphicon glyphicon-fast-backward"></span></a>
         <a class='btn btn-lg btn-primary' ng-class='activeFrame > 0 ? "" : "disabled"' ng-click="prevFrame()" title="Previous frame"><span class="glyphicon glyphicon-step-backward"></span></a>
         <a class='btn btn-lg btn-default' ng-cloak title="Play"><span class="glyphicon" ng-class='!animationPlaying ? "glyphicon-play" : "glyphicon-pause"' ng-click="togglePlay()"></span> {{ activeFrame+1 }}/{{ animation.frames.length }}</a>
+        <a class='btn btn-lg' ng-class='animationLoop ? "btn-info" : "btn-default"' ng-click="toggleLoop()" title="Toggle looping of animation"><span class="glyphicon glyphicon-repeat"></span></a>
         <a class='btn btn-lg btn-primary' ng-click="nextFrame()" title="Next frame. Doubleclick at last position adds new empty frame." ng-dblclick="nextdoubleClick()"><span class="glyphicon glyphicon-step-forward"></span></a>
         <a class='btn btn-lg btn-primary' ng-class='activeFrame < animation.frames.length-1 ? "" : "disabled"' ng-click="lastFrame()" title="Last frame"><span class="glyphicon glyphicon-fast-forward"></span></a>
       </div>
-    </div>
-    <div class="frame-controls">
-      <a class="btn btn-success" ng-click='cloneFrame()' title="Add copy of Frame"><span class="glyphicon glyphicon-new-window"></span> Clone</a>
-      <a class="btn btn-success" ng-click="addFrame()" title="Add empty Frame"> <span class="glyphicon glyphicon-edit"></span> Add new</a>
-      <br>
-      <a class='btn btn-danger' ng-class='animation.frames.length == 1 ? "disabled" : ""' ng-click="removeFrame()" title="Remove Frame"><span class="glyphicon glyphicon-remove">Delete</span></a>
-      <a class='btn btn-warning' ng-click="clearFrame()" title="Clear frame"><span class="glyphicon glyphicon-trash"></span> Empty</a>
-      <a class='btn btn-info' ng-click="fillFrame()" title="Fill frame"><span class="glyphicon glyphicon-th"></span> Fill</a>
-      <br>
-      <a class='btn btn-default' ng-click="toggleDrawvalue()"> <span class="glyphicon glyphicon-pencil"></span> <div class="pixel pixel-{{pixelClass(drawvalue)}} midi-pixel"></div></a>
-      <a class='btn' ng-class='animationLoop ? "btn-info" : "btn-default"' ng-click="toggleLoop()" title="Toggle looping of animation"><span class="glyphicon glyphicon-repeat"></span></a>
-      <a class="btn btn-primary" ng-click="export()" title="Export"><span class="glyphicon glyphicon-export"></span></a>
-      <a class="btn btn-primary" ng-click="import()" title="Import"><span class="glyphicon glyphicon-import"></span></a>
-    </div>
-
   </div>
+
 </div>

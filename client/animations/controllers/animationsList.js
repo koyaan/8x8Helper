@@ -3,6 +3,7 @@ angular.module("eightbyeightHelper").controller("AnimationsListCtrl", ['$scope',
 
     $scope.animations = $meteor.collection(Animations).subscribe("animations");
 
+    $scope.animinationId = null;
     $scope.remove = function (animation) {
       $scope.animations.splice($scope.animations.indexOf(animation), 1);
     };

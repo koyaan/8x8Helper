@@ -1,4 +1,4 @@
-Meteor.publish("animations", function () {
+Meteor.publish("animations", function publishFunction() {
   return Animations.find({
     $or:[
       {$and:[

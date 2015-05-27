@@ -4,10 +4,13 @@ angular.module("eightbyeightHelper").controller("AnimationsNewCtrl",
     var animation = new empty_animation();
     //var animation = new random_animation();
     animation.owner = $scope.currentUser._id;
+    $log.log($scope.currentUser);
+    animation.nickname = $scope.currentUser.username;
     var promise = $scope.animations.save(animation);
     promise.then(
       function(data){
         console.log('animation insert success', data);
+        $scope.animinationId = data[0]._id;
         $state.go('animationEdit', {animationId: data[0]._id});
       },
       function(err){

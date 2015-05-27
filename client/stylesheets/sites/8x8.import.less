@@ -1,43 +1,53 @@
-body {
-  padding-top: 50px;
+html {
+  min-height: 100%;
 }
 
+body {
+  padding-top: 50px;
+  min-height: 100%;
+}
+
+.jumbotron {
+  margin-top: 2em;
+}
 .container {
 
 }
-
-.starter-template {
-  padding: 1% 0.5%;
-  text-align: center;
+.animation-title {
+  display: inline;
 }
 
-.edit-frame {
-  line-height: 0em;
-  .pixels {
-    width: @pixelSize*10;
-    margin: 0 auto;
-  }
+.animations-list-title {
+  font-size: @font-size-large;
+}
+.public-icon {
+  display: inline-block;
+}
+
+.centered-row {
+  padding: 1% 0.5%;
+  text-align: center;
 }
 
 .frame-controls {
   margin-top: 0.5em;
   text-align: center;
   .btn {
-    width: 7em;
+    width: 3em;
     margin-bottom: 0.4em;
   }
 }
 
 
 .controls {
-  margin-top: 2em;
+  margin-top: 1em;
   text-align: center;
+  padding-bottom: 1em;
 }
 .meta-controls {
   margin-top: 2em;
   text-align: left;
 }
-
 
 .frame {
   line-height: 0;

@@ -12,8 +12,7 @@ angular.module("eightbyeightHelper").config(['$urlRouterProvider', '$stateProvid
       .state('animations', {
         url: '/animations',
         templateUrl: 'client/animations/views/animations-list.ng.html',
-        controller: 'AnimationsListCtrl',
-        resolve: {'subscribe': function($meteor){$meteor.subscribe('animations')}}
+        controller: 'AnimationsListCtrl'
       })
       .state('animationDetails', {
         url: '/animations/:animationId',
@@ -23,14 +22,14 @@ angular.module("eightbyeightHelper").config(['$urlRouterProvider', '$stateProvid
       .state('animationEdit', {
         url: '/animations/edit/:animationId',
         templateUrl: 'client/animations/views/animation-edit.ng.html',
-        controller: 'AnimationEditCtrl',
-        resolve: {'subscribe': function($meteor){$meteor.subscribe('animations')}}
+        controller: 'AnimationEditCtrl'
+        ,resolve: {'subscribe': function($meteor){$meteor.subscribe('animations')}}
       })
       .state('newAnimation', {
         url: '/animations/new',
         templateUrl: 'client/animations/views/animations-new.ng.html',
-        controller: 'AnimationsNewCtrl',
-        resolve: {'subscribe': function($meteor){$meteor.subscribe('animations')}}
+        controller: 'AnimationsNewCtrl'
+        //,resolve: {'subscribe': function($meteor){$meteor.subscribe('animations')}}
       })
     ;
 
