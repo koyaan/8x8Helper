@@ -14,11 +14,11 @@ angular.module("eightbyeightHelper").config(['$urlRouterProvider', '$stateProvid
         templateUrl: 'client/animations/views/animations-list.ng.html',
         controller: 'AnimationsListCtrl'
       })
-      .state('animationDetails', {
-        url: '/animations/:animationId',
-        templateUrl: 'client/animations/views/animation-details.ng.html',
-        controller: 'AnimationDetailsCtrl'
-      })
+      //.state('animationDetails', {
+      //  url: '/animations/details/:animationId',
+      //  templateUrl: 'client/animations/views/animation-details.ng.html',
+      //  controller: 'AnimationDetailsCtrl'
+      //})
       .state('animationEdit', {
         url: '/animations/edit/:animationId',
         templateUrl: 'client/animations/views/animation-edit.ng.html',
@@ -27,7 +27,7 @@ angular.module("eightbyeightHelper").config(['$urlRouterProvider', '$stateProvid
       })
       .state('newAnimation', {
         url: '/animations/new',
-        templateUrl: 'client/animations/views/animations-new.ng.html',
+        templateUrl: 'client/animations/views/animation-new.ng.html',
         controller: 'AnimationsNewCtrl'
         //,resolve: {'subscribe': function($meteor){$meteor.subscribe('animations')}}
       })

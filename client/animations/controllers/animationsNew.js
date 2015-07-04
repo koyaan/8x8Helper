@@ -3,6 +3,7 @@ angular.module("eightbyeightHelper").controller("AnimationsNewCtrl",
     $scope.animations = $meteor.collection(Animations).subscribe("animations");
     var animation = new empty_animation();
     //var animation = new random_animation();
+    // TODO: what if not authed
     animation.owner = $scope.currentUser._id;
     $log.log($scope.currentUser);
     animation.nickname = $scope.currentUser.username;
