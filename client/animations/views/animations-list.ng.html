@@ -21,7 +21,7 @@
       <h4 ng-show="!$root.currentUser">Login to see your animations.</h4>
       <div class="animations-list-title" ng-repeat="animation in animations" ng-show="$root.currentUser && animation.owner == $root.currentUser._id">
         <a ui-sref="animationEdit({animationId : animation._id})">{{animation.name}}</a>
-        <a ng-show="$root.currentUser && animation.owner == $root.currentUser._id" ng-click="remove(animation)"><span class="glyphicon glyphicon-remove-circle" title="Delete"></span></a>
+        <a ng-show="$root.currentUser && animation.owner == $root.currentUser._id" ng-click="remove(animation)" ng-confirm-click="Really delete?"><span class="glyphicon glyphicon-remove-circle" title="Delete"></span></a>
       </div>
     </div>
   </div>
