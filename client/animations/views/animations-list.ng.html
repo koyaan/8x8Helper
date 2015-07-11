@@ -18,11 +18,10 @@
         </div>
     </div>
     <div class="col-sm-6">
-      <h3>My Animations</h3>{{$root.currentUser._id}}
+      <h3>My Animations</h3>
       <h4 ng-show="!$root.currentUser">Login to see your animations.</h4>
-      <!--ng-show="$root.currentUser && animation.owner == $root.currentUser._id"-->
       <div class="animations-list-title" ng-repeat="animation in myanimations" >
-        <a ui-sref="animationEdit({animationId : animation._id})">{{animation.name}}</a> {{animation.owner}}
+        <a ui-sref="animationEdit({animationId : animation._id})">{{animation.name}}</a>
         <a ng-show="$root.currentUser && animation.owner == $root.currentUser._id" ng-click="remove(animation)" ng-confirm-click="Really delete?"><span class="glyphicon glyphicon-remove-circle" title="Delete"></span></a>
       </div>
     </div>

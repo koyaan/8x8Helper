@@ -1,22 +1,15 @@
 angular.module("eightbyeightHelper").controller("AnimationsListCtrl", ['$scope', '$meteor', '$rootScope',
-  function ($scope, $meteor, $rootScope) {
-
+  function ($scope, $meteor) {
 
       $scope.$meteorSubscribe('animations').then(function (handler) {
         $scope.animations = $meteor.collection(Animations);
-        if($rootScope.currentUser)  {
-          $scope.myanimations = $meteor.collection(function () {
-            return Animations.find({owner: $rootScope.currentUser._id});
-          });
-        }
       });
-    $rootScope.$watch('currentUser', function () {
-      if($rootScope.currentUser) {
+
+    $meteor.autorun($scope, function() {
+      if ($scope.getReactively('currentUser')) {
         $scope.myanimations = $meteor.collection(function () {
-          return Animations.find({owner: $rootScope.currentUser._id});
+            return Animations.find({owner: $scope.getReactively('currentUser')._id});
         });
-      } else {
-        $scope.myanimations = null;
       }
     });
 
