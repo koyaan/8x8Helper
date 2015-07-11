@@ -17,7 +17,7 @@
        class="dropdown-toggle mycloak" data-toggle="dropdown">{{animation.name}}<b class="caret"></b></a>
     <ul class="dropdown-menu" role="menu">
       <li><a ui-sref="newAnimation"><span class="glyphicon glyphicon-plus"></span> Empty</a></li>
-      <li ng-show="$state.includes('animationEdit')"><a href="#">Fork</a></li>
+      <li ng-show="$state.includes('animationEdit')"><a ng-click="fork()">Fork</a></li>
       <!-- TODO: implement fork anim  -->
       <!--<li class="divider"></li>-->
     </ul>

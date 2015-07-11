@@ -320,4 +320,18 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
       }
     };
 
+    $scope.fork = function(){
+      $meteor.call('forkAnimation', $scope.animinationId).then(
+          function(data){
+            // Handle success
+            console.log('success inviting', data);
+          },
+          function(err){
+            // Handle error
+            console.log('failed', err);
+          }
+      );
+
+    };
+
   });
