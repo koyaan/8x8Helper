@@ -7,8 +7,8 @@
 meteor-platform
 urigo:angular
 less
-nemo64:bootstrap
 angularui:angular-ui-router
 accounts-password
-ian:accounts-ui-bootstrap-3
 angularui:angular-ui-bootstrap
+ian:accounts-ui-bootstrap-3
+twbs:bootstrap
