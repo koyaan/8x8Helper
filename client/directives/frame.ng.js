@@ -8,14 +8,14 @@ angular.module('eightbyeightHelper').
         var ctx = element[0].getContext('2d');
         ngModel.$render = function() {
           ngModel.$viewValue.pixels.forEach(function(pixel, index){
-            var pX = 3 +  index % 8 * (7 + 3);
-            var pY = 3 + Math.floor(index / 8) * (7 + 3);
+            var pX = 2 +  index % 8 * (8 + 2);
+            var pY = 2 + Math.floor(index / 8) * (8 + 2);
             if(pixel.value) {
               ctx.fillStyle = "#d43f3a";
             } else {
               ctx.fillStyle = "#b9def0";
             }
-            ctx.fillRect(pX,pY,7,7);
+            ctx.fillRect(pX,pY,8,8);
           });
         };
 

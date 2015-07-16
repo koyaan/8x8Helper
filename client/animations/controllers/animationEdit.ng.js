@@ -4,7 +4,6 @@
  - TODO: fork animations
  - TODO: mobile optimization
  - TODO: touch support
-
  - TODO: pagination
  */
 
@@ -19,20 +18,22 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
     $scope.animationLoop = false;
     $scope.activeFrame = 0;
     $scope.saveTimeout = null;
-    $scope.display = "none";
 
     var canvas = document.getElementById('myCanvas');
     var ctx = canvas.getContext('2d');
 
-    $scope.animations = $meteor.subscribe("animations").then(function () {
+    $scope.animinationId = $stateParams.animationId;
+
+    $scope.$meteorSubscribe('animations').then(function (handler) {
       $('.mycloak').removeClass("mycloak");
-      $scope.animation = $meteor.object(Animations, $stateParams.animationId, false);
-      $scope.$watch(function(scope) { return scope.getActiveFrame() },
-        function() {
-          $scope.drawFrame();
-        }
-      );
+      $scope.animation = $meteor.object(Animations, $scope.getReactively('animinationId'), false);
     });
+
+    $scope.$watch(function(scope) { return scope.getActiveFrame() },
+      function() {
+        $scope.drawFrame();
+      }
+    );
 
     $scope.getActiveFrame = function () {
       if($scope.animation && $scope.animation.frames) {
@@ -43,6 +44,8 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
     };
 
     $scope.drawFrame = function () {
+      if(!$scope.animation || !$scope.animation.frames)
+        return;
       $scope.animation.frames[$scope.activeFrame].pixels.forEach(function(pixel, index){
         var pX = 10 +  index % 8 * (40 + 10);
         var pY = 10 + Math.floor(index / 8) * (40 + 10);
@@ -96,12 +99,13 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
       };
 
       $scope.animation.frames.forEach(function (frame, index) {
-        var frameExport = {index: index, one_bit_string: "", one_bit: [], eight_bit: []};
+        //var frameExport = {index: index, one_bit_string: "", one_bit: [], eight_bit: []};
+        var frameExport = {index: index, eight_bit: []};
         var bitPos = 7;     //  used to calculate row value
         var pixelSum = 0;   //
         frame.pixels.forEach(function (pixel) {
-          frameExport.one_bit_string += pixel.value;
-          frameExport.one_bit.push(pixel.value);
+          //frameExport.one_bit_string += pixel.value;
+          //frameExport.one_bit.push(pixel.value);
           pixelSum += pixel.value << bitPos--;
           if(bitPos == -1)  {
             frameExport.eight_bit.push(pixelSum); // we read 1 byte push it
@@ -153,6 +157,11 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
 
     $scope.toggleLoop = function () {
       $scope.animationLoop = !$scope.animationLoop;
+    };
+
+    $scope.togglePublic = function () {
+      $scope.animation.public = !$scope.animation.public;
+      $scope.animation.save();
     };
 
     $scope.animate = function () {
@@ -210,7 +219,7 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
       for (var i = 0; i < 64; i++) {
         $scope.animation.frames[$scope.activeFrame].pixels[i].value = 1;
       }
-      $scope.drawvalue = 1;
+      $scope.drawvalue = 0;
       $scope.animation.save();
     };
 
@@ -218,7 +227,7 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
       for (var i = 0; i < 64; i++) {
         $scope.animation.frames[$scope.activeFrame].pixels[i].value = 0;
       }
-      $scope.drawvalue = 0;
+      $scope.drawvalue = 1;
       $scope.animation.save();
     };
 
@@ -276,8 +285,10 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
       var pX = Math.floor(lastX / 50);
       var pY = Math.floor(lastY / 50);
       if(lastX % 50 > 10 && lastY % 50 > 10) {
-        $scope.getActiveFrame().pixels[pY*8+pX].value =
-        $scope.getActiveFrame().pixels[pY*8+pX].value == 1 ? 0 : 1;
+        //var num = ;
+        //return $scope.animation.frames[$scope.activeFrame];
+        $scope.animation.frames[$scope.activeFrame].pixels[pY*8+pX].value =
+            $scope.animation.frames[$scope.activeFrame].pixels[pY*8+pX].value == 1 ? 0 : 1;
       }
     };
 
@@ -299,6 +310,20 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
       if ($scope.activeFrame == $scope.animation.frames.length - 1) {
         $scope.addFrame();
       }
+    };
+
+    $scope.fork = function(){
+      $meteor.call('forkAnimation', $scope.animinationId).then(
+          function(data){
+            // Handle success
+            console.log('success inviting', data);
+          },
+          function(err){
+            // Handle error
+            console.log('failed', err);
+          }
+      );
+
     };
 
   });

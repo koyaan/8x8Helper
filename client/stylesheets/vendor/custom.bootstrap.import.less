@@ -12,24 +12,26 @@
 // --------------------------------------------------
 
 
-//== Colors
-//
-//## Gray and brand colors for use across Bootstrap.
-
-@gray-darker:            lighten(#000, 13.5%); // #222
-@gray-dark:              #4f443b;   // #333
-@gray:                   #976c52; // #555
-@gray-light:             #807e81;   // #999
-@gray-lighter:           #5fa8d4; // #eee
-
 // Brand colors
 // -------------------------
 
-@brand-primary:         #5c5855;
+@brand-primary: #0b8ac7;
 @brand-success:         #5cb85c;
 @brand-warning:         #f0ad4e;
 @brand-danger:          #d9534f;
 @brand-info:            #5bc0de;
+
+//== Colors
+//
+//## Gray and brand colors for use across Bootstrap.
+
+@gray-darker:            #000;
+@gray-dark:              #4f443b;   // #333
+@gray:                   #976c52; // #555
+@gray-light:             #807e81;   // #999
+@gray-lighter:          lighten(@brand-primary, 15%);
+
+
 
 
 //== Scaffolding
@@ -180,6 +182,11 @@
 @btn-danger-border:              darken(@btn-danger-bg, 5%);
 
 @btn-link-disabled-color:        @gray-light;
+
+// Allows for customizing button radius independently from global border radius
+@btn-border-radius-base:         @border-radius-base;
+@btn-border-radius-large:        @border-radius-large;
+@btn-border-radius-small:        @border-radius-small;
 
 
 //== Forms
@@ -370,15 +377,15 @@
 @navbar-padding-vertical:          ((@navbar-height - @line-height-computed) / 2);
 @navbar-collapse-max-height:       340px;
 
-@navbar-default-color:             #777;
-@navbar-default-bg:                #f8f8f8;
+@navbar-default-color:             @gray-darker;
+@navbar-default-bg:                @brand-primary;
 @navbar-default-border:            darken(@navbar-default-bg, 6.5%);
 
 // Navbar links
-@navbar-default-link-color:                #777;
+@navbar-default-link-color:                @gray-darker;
 @navbar-default-link-hover-color:          #333;
 @navbar-default-link-hover-bg:             transparent;
-@navbar-default-link-active-color:         #555;
+@navbar-default-link-active-color:         @gray-dark;
 @navbar-default-link-active-bg:            darken(@navbar-default-bg, 6.5%);
 @navbar-default-link-disabled-color:       #ccc;
 @navbar-default-link-disabled-bg:          transparent;
@@ -394,7 +401,7 @@
 @navbar-default-toggle-border-color:       #ddd;
 
 
-// Inverted navbar
+//=== Inverted navbar
 // Reset inverted navbar basics
 @navbar-inverse-color:                      lighten(@gray-light, 15%);
 @navbar-inverse-bg:                         #222;
@@ -495,6 +502,7 @@
 @jumbotron-bg:                   @gray-lighter;
 @jumbotron-heading-color:        inherit;
 @jumbotron-font-size:            ceil((@font-size-base * 1.5));
+@jumbotron-heading-font-size:    ceil((@font-size-base * 4.5));
 
 
 //== Form states and alerts

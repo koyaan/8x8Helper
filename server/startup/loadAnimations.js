@@ -15,7 +15,8 @@ Meteor.startup(function () {
         frames: baseanimations[i].frames,
         loop: baseanimations[i].loop,
         name: baseanimations[i].name,
-        owner: "xkzQLk2vJW66uAREj",
+        owner: "BwmodBt28MM54Z9Ad",
+        nickname: "anonymous",
         public: true
       });
     }
