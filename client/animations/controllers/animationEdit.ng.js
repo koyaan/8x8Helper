@@ -22,28 +22,18 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
     var canvas = document.getElementById('myCanvas');
     var ctx = canvas.getContext('2d');
 
-    $scope.animations = $meteor.subscribe("animations").then(function () {
-      $('.mycloak').removeClass("mycloak");
-    });
-
     $scope.animinationId = $stateParams.animationId;
-    $scope.animation = $meteor.object(Animations, $scope.getReactively('animinationId'), false);
 
-    //$scope.parties = $meteor.collection(function() {
-    //  return Parties.find({}, {
-    //    sort : $scope.getReactively('sort')     // Every time $scope.sort will change,
-    //    // the reactive function will re-run again
-    //  });
-    //});
-
+    $scope.$meteorSubscribe('animations').then(function (handler) {
+      $('.mycloak').removeClass("mycloak");
+      $scope.animation = $meteor.object(Animations, $scope.getReactively('animinationId'), false);
+    });
 
     $scope.$watch(function(scope) { return scope.getActiveFrame() },
       function() {
         $scope.drawFrame();
       }
     );
-
-
 
     $scope.getActiveFrame = function () {
       if($scope.animation && $scope.animation.frames) {
@@ -295,8 +285,10 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
       var pX = Math.floor(lastX / 50);
       var pY = Math.floor(lastY / 50);
       if(lastX % 50 > 10 && lastY % 50 > 10) {
-        $scope.getActiveFrame().pixels[pY*8+pX].value =
-        $scope.getActiveFrame().pixels[pY*8+pX].value == 1 ? 0 : 1;
+        //var num = ;
+        //return $scope.animation.frames[$scope.activeFrame];
+        $scope.animation.frames[$scope.activeFrame].pixels[pY*8+pX].value =
+            $scope.animation.frames[$scope.activeFrame].pixels[pY*8+pX].value == 1 ? 0 : 1;
       }
     };
 

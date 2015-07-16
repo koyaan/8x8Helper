@@ -19,7 +19,7 @@ Meteor.methods({
 
     if (! this.userId) {
       throw new Meteor.Error("not-logged-in",
-          "Must be logged in to fork");
+          "You must be logged in to fork");
     }
     var forkAnim = Animations.findOne({_id: animationId});
 
