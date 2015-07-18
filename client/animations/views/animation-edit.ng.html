@@ -10,7 +10,7 @@
 <!--<h1>User: {{$root.currentUser._id}}</h1>-->
 
 <div class="frame-view centered-row">
-  <div class="frame" ng-class='$index == activeFrame ? "active" : "" ' ng-repeat="frame in animation.frames" ng-click="gotoFrame($index)">
+  <div class="frame" ng-class='$index == activeFrame ? "active" : "" ' ng-repeat="frame in animation.frames track by $index" ng-click="gotoFrame($index)">
     <canvas ng-model="frame" ebeframe width="83" height="83">
     </canvas>
   </div>
