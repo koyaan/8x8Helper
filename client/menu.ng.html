@@ -1,25 +1,7 @@
 <ul class="nav navbar-nav">
-  <li ui-sref-active="active"><a ui-sref="animations">Home</a></li>
-  <!--<li ui-sref-active="active"><a ui-sref="about">About</a></li>-->
-  <!--<li class="dropdown">-->
-  <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">New<b class="caret"></b></a>-->
-  <!--<ul class="dropdown-menu">-->
-  <!--&lt;!&ndash;<li><a ui-sref="newAnimation">Import</a></li>&ndash;&gt;-->
-  <!--&lt;!&ndash;<li class="dropdown-header">Docs</li>&ndash;&gt;-->
-  <!--&lt;!&ndash;<li><a href="https://angularjs.meteor.com/tutorial/step_03">angular-meteor</a></li>&ndash;&gt;-->
-  <!--&lt;!&ndash;<li><a href="https://github.com/strikeout/mylar">mylar</a></li>&ndash;&gt;-->
-  <!--</ul>-->
-  <!--</li>-->
-  <li ui-sref-active="active" class="dropdown">
-    <a ng-show="!$state.includes('animationEdit')" class="dropdown-toggle" data-toggle="dropdown">New <b
-        class="caret"></b></a>
-    <a ui-sref="animationEdit({animationId : animation._id})" ng-show="$state.includes('animationEdit')"
-       class="dropdown-toggle mycloak" data-toggle="dropdown">{{animation.name}}<b class="caret"></b></a>
-    <ul class="dropdown-menu" role="menu">
-      <li><a ui-sref="newAnimation"><span class="glyphicon glyphicon-plus"></span> Empty</a></li>
-      <li ng-show="$state.includes('animationEdit')"><a ng-click="fork()">Fork</a></li>
-      <!-- TODO: implement fork anim  -->
-      <!--<li class="divider"></li>-->
-    </ul>
+  <li ui-sref-active="active"><a ui-sref="animations">Animations</a></li>
+  <li><a ui-sref="animationEdit({animationId : animation._id})" ng-show="$state.includes('animationEdit')">{{animation.name}}</a>
   </li>
+  <li ng-show="$state.includes('animationEdit')"><a ng-click="fork()" href="javascript://">Fork</a></li>
+  <li ui-sref-active="active"><a ui-sref="newAnimation"><span class="glyphicon glyphicon-plus"></span> New</a></li>
 </ul>

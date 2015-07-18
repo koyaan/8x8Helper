@@ -9,7 +9,7 @@ angular.module("eightbyeightHelper").config(['$urlRouterProvider', '$stateProvid
         templateUrl: 'client/static/about.ng.html'
       })
       .state('animations', {
-        url: '/animations',
+        url: '/',
         templateUrl: 'client/animations/views/animations-list.ng.html',
         controller: 'AnimationsListCtrl'
       })
@@ -32,5 +32,5 @@ angular.module("eightbyeightHelper").config(['$urlRouterProvider', '$stateProvid
       })
     ;
 
-    $urlRouterProvider.otherwise("/animations");
+    $urlRouterProvider.otherwise("/");
   }]);
