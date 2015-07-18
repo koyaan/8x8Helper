@@ -6,7 +6,7 @@
 // Demonstrate how to register services
 // In this case it is a simple value service.
 angular.module('eightbyeightHelper').
-  value('version', 'v0.9');
+  value('version', 'v0.9 beta');
 
 angular.module('eightbyeightHelper').
   filter('interpolate', ['version', function(version) {
