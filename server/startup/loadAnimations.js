@@ -5,18 +5,19 @@ Meteor.startup(function () {
   if (Animations.find({}).count() === 0) {
   //if (Animations.find({}).count() < 25) {
     var baseanimations = [];
-    for (var i = 0; i < 3; i++) {
+    //for (var i = 0; i < 3; i++) {
       baseanimations.push(new random_animation());
-    }
+    //}
     console.log(baseanimations);
     for (var i = 0; i < baseanimations.length; i++) {
       console.log("inserting " + i);
       Animations.insert({
+        _id: "MdhAgAZ68DJ6JNJrC",
         frames: baseanimations[i].frames,
         loop: baseanimations[i].loop,
-        name: baseanimations[i].name,
+        name: "Free for all",
         owner: "BwmodBt28MM54Z9Ad",
-        nickname: "anonymous",
+        nickname: "Demo User",
         public: true
       });
     }

@@ -1,14 +1,17 @@
 <meteor-include src="header"></meteor-include>
 <div class="container">
   <div class="centered-row">
-    <h1 contenteditable ng-model="animation.name" class="mycloak animation-title" ng-change="animation.save()" required></h1>
-    <a ng-click="togglePublic()" title="Toggle Public Flag">
+    <h1 contenteditable ng-model="animation.name" class="mycloak animation-title" ng-change="animation.save()" required ng-show="animation._id != 'MdhAgAZ68DJ6JNJrC'"></h1>
+    <h1 ng-model="animation.name" class="mycloak animation-title" ng-show="animation._id == 'MdhAgAZ68DJ6JNJrC'">Free for all</h1>
+    <a ng-click="togglePublic()" title="Toggle Public Flag" ng-show="animation._id != 'MdhAgAZ68DJ6JNJrC'">
       <span class="glyphicon public-icon" ng-class="animation.public ? 'glyphicon-eye-open' : 'glyphicon-eye-close'"></span>
     </a>
+    <p ng-show="animation._id == 'MdhAgAZ68DJ6JNJrC'">
+      This is the free for all animation, that everybody can edit.
+    </p>
   </div>
 </div>
 <!--<h1>User: {{$root.currentUser._id}}</h1>-->
-
 <div class="frame-view centered-row">
   <div class="frame" ng-class='$index == activeFrame ? "active" : "" ' ng-repeat="frame in animation.frames track by $index" ng-click="gotoFrame($index)">
     <canvas ng-model="frame" ebeframe width="83" height="83">
@@ -59,9 +62,9 @@
       </div>
       <div class="modal-body">
         <p>You can rename an animation by just clicking on the title.<br>
-        Clicking pixels toggles their value, you can also click and drag to draw continously
+        Clicking pixels toggles their value, you can also click and drag to draw continously<br>
         The <span class="glyphicon public-icon glyphicon-eye-open"></span> next to the title toggles the public flag.<br></p>
-        <a class='btn btn-primary' ng-attr-style="color: {{ drawvalue ? '#d43f3a' : '#b9def0'}}" title="Toggle Draw Value (SPACE)"> <span class="glyphicon glyphicon-pencil"></span></a> Toggle the Color that is drawn<br>
+        <a class='btn btn-primary' ng-attr-style="color: {{ drawvalue ? '#d43f3a' : '#b9def0'}}" title="Toggle Draw Value (SPACE)"> <span class="glyphicon glyphicon-pencil"></span></a> Toggle the Color that is drawn (Hotkey SPACE)<br>
         <a class="btn btn-primary" title="Add copy of Frame"><span class="glyphicon glyphicon-new-window"></span></a>Add copy of current frame<br>
         <a class="btn btn-primary" title="Add empty Frame"> <span class="glyphicon glyphicon-plus"></span></a>Add empty frame<br>
         <a class='btn btn-primary' title="Remove Frame"><span class="glyphicon glyphicon-remove"></span></a>Remove current frame<br>

@@ -159,6 +159,9 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
     };
 
     $scope.togglePublic = function () {
+      if($stateParams.animationId == 'MdhAgAZ68DJ6JNJrC') {
+        return;
+      }
       $scope.animation.public = !$scope.animation.public;
       $scope.animation.save();
     };
