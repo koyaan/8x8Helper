@@ -1,14 +1,13 @@
 /**
  - TODO: import
  - TODO: anonymous usage
- - TODO: fork animations
  - TODO: mobile optimization
  - TODO: touch support
  - TODO: pagination
  */
 
 angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
-  function($scope, $meteor, $log, $timeout, $stateParams, $modal){
+  function($scope, $meteor, $log, $timeout, $stateParams, $modal, $state){
     $scope.dragThreshold = 7; // amount of pixels to consider dragging motion
     $scope.mousedown = false;
     $scope.draging = false;
@@ -316,11 +315,17 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
       $meteor.call('forkAnimation', $scope.animinationId).then(
           function(data){
             // Handle success
-            console.log('success inviting', data);
+            //console.log('success inviting', data);
+            $state.go('animationEdit', {animationId: data});
           },
           function(err){
             // Handle error
-            console.log('failed', err);
+            //console.log('failed', err);
+            if(err.error == "not-logged-in")  {
+              alert("You must be logged in to fork!");
+            } else {
+              alert(err.error);
+            }
           }
       );
 
