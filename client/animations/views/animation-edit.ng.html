@@ -49,3 +49,35 @@
   </div>
 
 </div>
+
+<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Help</h4>
+      </div>
+      <div class="modal-body">
+        <p>You can rename an animation by just clicking on the title.<br>
+        Clicking pixels toggles their value, you can also click and drag to draw continously
+        The <span class="glyphicon public-icon glyphicon-eye-open"></span> next to the title toggles the public flag.<br></p>
+        <a class='btn btn-primary' ng-attr-style="color: {{ drawvalue ? '#d43f3a' : '#b9def0'}}" title="Toggle Draw Value (SPACE)"> <span class="glyphicon glyphicon-pencil"></span></a> Toggle the Color that is drawn<br>
+        <a class="btn btn-primary" title="Add copy of Frame"><span class="glyphicon glyphicon-new-window"></span></a>Add copy of current frame<br>
+        <a class="btn btn-primary" title="Add empty Frame"> <span class="glyphicon glyphicon-plus"></span></a>Add empty frame<br>
+        <a class='btn btn-primary' title="Remove Frame"><span class="glyphicon glyphicon-remove"></span></a>Remove current frame<br>
+        <a class='btn btn-primary' title="Clear frame"><span class="glyphicon glyphicon-trash"></span></a>Clear current frame<br>
+        <a class='btn btn-primary' title="Fill frame"><span class="glyphicon glyphicon-th"></span></a>Fill current frame<br>
+        <a class="btn btn-primary" title="Export"><span class="glyphicon glyphicon-export"></span></a>Export Animation<br>
+        <a class='btn btn-primary' title="First frame"><span class="glyphicon glyphicon-fast-backward"></span></a> Go to first frame<br>
+        <a class='btn btn-primary' title="Previous frame"><span class="glyphicon glyphicon-step-backward"></span></a> Go back one frame<br>
+        <a class='btn btn-default' title="Play"><span class="glyphicon glyphicon-play" ></span></a>  Play/pause animation <br>
+        <a class='btn' ng-class='animationLoop ? "btn-info" : "btn-default"' title="Toggle looping of animation"><span class="glyphicon glyphicon-repeat"></span></a> Toggle looping <br>
+        <a class='btn btn-primary' title="Next frame. Doubleclick at last position adds new empty frame." ><span class="glyphicon glyphicon-step-forward"></span></a> Next frame. Doubleclick at last position adds new empty frame.<br>
+        <a class='btn btn-primary' title="Last frame"><span class="glyphicon glyphicon-fast-forward"></span></a> Go to last frame<br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

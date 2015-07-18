@@ -330,5 +330,4 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
       );
 
     };
-
   });
