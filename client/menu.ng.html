@@ -1,7 +1,7 @@
 <ul class="nav navbar-nav">
   <li ui-sref-active="active"><a ui-sref="animations">Animations</a></li>
-  <li><a ui-sref="animationEdit({animationId : animation._id})" ng-show="$state.includes('animationEdit')">{{animation.name}}</a>
+  <li ui-sref-active="active"><a ui-sref="animationEdit({animationId : animation._id})" ng-show="$state.includes('animationEdit')">{{animation.name}}</a>
   </li>
-  <li ng-show="$state.includes('animationEdit')"><a ng-click="fork()" href="javascript://">Fork</a></li>
+  <li ng-show="$state.includes('animationEdit')"><a ng-click="fork()" href="javascript://"><span class="glyphicon glyphicon-paste"></span> Fork</a></li>
   <li ui-sref-active="active"><a ui-sref="newAnimation"><span class="glyphicon glyphicon-plus"></span> New</a></li>
 </ul>

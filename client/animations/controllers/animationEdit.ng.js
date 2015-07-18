@@ -99,7 +99,7 @@ angular.module("eightbyeightHelper").controller("AnimationEditCtrl",
 
       $scope.animation.frames.forEach(function (frame, index) {
         //var frameExport = {index: index, one_bit_string: "", one_bit: [], eight_bit: []};
-        var frameExport = {index: index, eight_bit: []};
+        var frameExport = {index: index, eight_bit: [], duration: frame.duration/1000};
         var bitPos = 7;     //  used to calculate row value
         var pixelSum = 0;   //
         frame.pixels.forEach(function (pixel) {

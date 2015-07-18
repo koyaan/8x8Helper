@@ -1,8 +1,35 @@
 <div class="modal-header">
-  <h3 class="modal-title">{{animationExport.name}} JSON Export</h3>
+  <h3 class="modal-title">{{animationExport.name}} Export</h3>
 </div>
 <div class="modal-body">
+  <h4>raw JSON</h4>
   <pre>{{animationExport}}</pre>
+  <h4>Python script</h4>
+  <pre>
+import json
+from time import sleep
+from Adafruit_8x8 import EightByEight
+
+def showFrame(frame):
+    x = 0
+    grid.disp.clear()
+    for row in frame["eight_bit"]:
+      for y in range(0,8):
+        if(row >> y & 1):
+          grid.setPixel(x, y, 1)
+      x = x+1
+
+grid = EightByEight(address=0x70,debug=True)
+grid.disp.setBrightness(1)
+animation = json.loads('{{animationExport}}')
+
+print(animation["name"])
+for frame in animation["frames"]:
+    showFrame(frame)
+    sleep(frame["duration"])
+
+grid.disp.clear()
+  </pre>
 </div>
 <div class="modal-footer">
   <button class="btn btn-primary" ng-click="ok()">OK</button>
