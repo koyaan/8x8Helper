@@ -38,6 +38,8 @@ minifiers@1.1.5
 minimongo@1.0.8
 mobile-status-bar@1.0.3
 mongo@1.1.0
+nemo64:bootstrap@3.3.5_2
+nemo64:bootstrap-data@3.3.5
 npm-bcrypt@0.7.8_2
 observe-sequence@1.0.6
 ordered-dict@1.0.3
@@ -56,7 +58,6 @@ srp@1.0.3
 stylus@1.0.7
 templating@1.1.1
 tracker@1.0.7
-twbs:bootstrap@3.3.5
 ui@1.0.6
 underscore@1.0.3
 urigo:angular@0.9.2
