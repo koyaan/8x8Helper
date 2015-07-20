@@ -38,7 +38,7 @@ empty_frame = function () {
 
 empty_animation = function () {
   this.frames = [];
-  this.name = "Untitled Empty Animation";
+  this.name = "Untitled Animation";
   this.public = true;
   for (var j = 0; j < 7; j++) {
     this.frames.push(new empty_frame());
